@@ -1,3 +1,9 @@
 import { ReactElement } from 'react';
 
-export const Home = ():ReactElement => <>Home</>;
+import { DefaultSidebar } from '../components/Sidebar';
+
+export const Home = ():ReactElement =>
+  <>
+    <DefaultSidebar />
+    Home
+  </>;
