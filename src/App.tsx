@@ -4,9 +4,14 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
   Link
 } from 'react-router-dom';
+
+import { Route } from './components/Route';
+
+import { About } from './containers/About';
+import { Test } from './containers/Test';
+import { Home } from './containers/Home';
 
 const Nav = () =>
   <header>
@@ -21,15 +26,9 @@ function App() {
       <Router>
         <Nav />
         <Switch>
-          <Route path='/about'>
-            About page
-          </Route>
-          <Route path='/test'>
-            Test page
-          </Route>
-          <Route path='/'>
-            Home page
-          </Route>
+          <Route path='/about' title='About' Component={ About } />
+          <Route path='/test' title='Test' Component={ Test } />
+          <Route path='/' title='Home' Component={ Home } />
         </Switch>
       </Router>
     </div>
