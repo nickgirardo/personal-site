@@ -8,5 +8,7 @@ interface Props {
 export const Page = (props: Props): ReactElement =>
   <div id='page'>
     { props.sidebar && <props.sidebar /> }
-    { props.children }
+    <div id='main-content' className={ props.sidebar && 'with-sidebar' }>
+      { props.children }
+    </div>
   </div>;
