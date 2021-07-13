@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 import {
   BrowserRouter as Router,
@@ -8,7 +8,6 @@ import {
 
 import { Route } from './components/Route';
 
-import { Sidebar } from './components/Sidebar';
 import { About } from './containers/About';
 import { Test } from './containers/Test';
 import { Home } from './containers/Home';
