@@ -6,8 +6,9 @@ module.exports = {
   entry: './src/index.tsx',
   devtool: 'inline-source-map',
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, '../build'),
-    filename: '[name].js',
+    filename: 'bundle.js',
   },
   resolve: {
     extensions: ['', '.js', '.ts', '.jsx', '.tsx'],
@@ -36,7 +37,11 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, './build'),
+    contentBase: path.resolve(__dirname, '../build'),
+    historyApiFallback: {
+      disableDotRule: true,
+      index: '/',
+    },
   },
   watchOptions: {
     ignored: /node_modules/,
