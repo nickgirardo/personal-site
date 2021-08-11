@@ -22,7 +22,7 @@ const postscript = `this.flushConsole();
 // TODO take expected output to display for noscript users
 interface Props {
   code: string;
-  hiddenPrelude: string;
+  hiddenPrelude?: string;
   codeHeight?: string;
 }
 
@@ -50,7 +50,7 @@ export const CodeRegion = (props: Props):ReactElement => {
 
     // TODO look further into making sure this is safe
     // eslint-disable-next-line no-new-func
-    return Function(`${prelude}${props.hiddenPrelude}${program}${postscript}`).apply(thisObj);
+    return Function(`${prelude}${props.hiddenPrelude || ''}${program}${postscript}`).apply(thisObj);
   };
 
   return (

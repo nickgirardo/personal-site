@@ -113,6 +113,10 @@ $border-std: 1px solid #888;
     background-color: hsl(195, 20%, 92%);
     border: $border-std;
     border-radius: 2px;
+
+    span.CodeMirror-matchingbracket {
+      color: #222;
+    }
   }
 
   div.CodeMirror-selected,

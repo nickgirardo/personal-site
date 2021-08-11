@@ -10,6 +10,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  background-color: hsl(195, 20%, 92%);
+}
+
+p,
+mjx-container {
+  max-width: 80ch;
 }
 
 @import 'styles/_variables.scss';
