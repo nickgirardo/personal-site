@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 
 import CodeMirror from '@uiw/react-codemirror';
 import 'codemirror/keymap/sublime';
+import 'codemirror/mode/javascript/javascript';
 
 // TODO currently for catching errors I'm just wrapping the whole thing
 // in a try catch. This can be escaped by a user if they wanted
@@ -55,6 +56,7 @@ export const CodeRegion = (props: Props):ReactElement => {
         value={ props.code }
         onChange={ (editor) => setCodeMirrorProgram(editor.getValue()) }
         height={ props.codeHeight || '12em' }
+        lazyLoadMode={ false }
         options={{
           theme: 'nicks-theme',
           keyMap: 'sublime',
