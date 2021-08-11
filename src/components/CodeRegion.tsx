@@ -4,6 +4,8 @@ import CodeMirror from '@uiw/react-codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/mode/javascript/javascript';
 
+import { printData } from '../util';
+
 // TODO currently for catching errors I'm just wrapping the whole thing
 // in a try catch. This can be escaped by a user if they wanted
 // Not sure what the best way to handle the errors would be
@@ -25,6 +27,7 @@ interface Props {
 }
 
 // TODO noscript
+// TODO codemirror is super overkill for the output
 export const CodeRegion = (props: Props):ReactElement => {
   const [codeMirrorProgram, setCodeMirrorProgram] = useState(props.code);
   const [consoleHistory, setConsoleHistory] = useState('');
@@ -34,7 +37,7 @@ export const CodeRegion = (props: Props):ReactElement => {
     const fakeConsole = (...data: any[]) => {
       // TODO we can do better than just .toString() here
       // Can check here for guidance https://github.com/whatwg/console
-      const newData: string = data.map(d => d.toString()).join(', ');
+      const newData: string = data.map(printData).join(', ');
       consoleBuffer.push(newData);
     };
     const flushConsole = () =>

@@ -21,7 +21,13 @@ if (!solution) {
 export const CmTest = ():ReactElement => {
   return (
     <Page sidebar={ DefaultSidebar }>
-     A cool blog post!
+      <h2>A title</h2>
+      <CodeRegion
+        code={ code }
+        codeHeight='15em'
+        hiddenPrelude={ BooleanSat }
+      />
+      <p> A paragraph all about something </p>
       <CodeRegion
         code={ code }
         codeHeight='15em'
