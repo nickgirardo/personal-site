@@ -12,6 +12,8 @@ import { About } from './containers/About';
 import { Test } from './containers/Test';
 import { Home } from './containers/Home';
 
+import { CmTest } from './containers/blog/CmTest';
+
 function App() {
   return (
     <div className="app">
@@ -19,6 +21,7 @@ function App() {
         <Switch>
           <Route path='/about' title='About' Component={ About } />
           <Route path='/test' title='Test' Component={ Test } />
+          <Route path='/blog/cm-test' title='Code Mirror Test' Component={ CmTest } />
           <Route path='/' title='Home' Component={ Home } />
         </Switch>
       </Router>
