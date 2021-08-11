@@ -4,7 +4,7 @@ import { Page } from '../../components/Page';
 import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
 
-const prelude = 'const satSolve = () => false;';
+import BooleanSat from '../../res/boolean-sat.raw';
 
 const code = `const clauses = [
   [1, -2],
@@ -25,7 +25,7 @@ export const CmTest = ():ReactElement => {
       <CodeRegion
         code={ code }
         codeHeight='15em'
-        hiddenPrelude={ prelude }
+        hiddenPrelude={ BooleanSat }
       />
     </Page>
   );
