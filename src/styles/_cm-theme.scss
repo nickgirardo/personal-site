@@ -1,37 +1,5 @@
-$border-std: 1px solid #888;
-
-// TODO should this be moved elsewhere?
-.code-region {
-  width: 80ch;
-
-  background-color: hsl(195, 20%, 98%);
-  .control-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-
-    .controls {
-      padding: 0 2em;
-
-      display: flex;
-      flex-direction: column;
-
-      >:not(:last-child) {
-        margin-bottom: 0.5em;
-      }
-    }
-
-    .output {
-      margin: 1em 1em 1em 0;
-      flex-grow: 1;
-    }
-  }
-
-  border: $border-std;
-  border-radius: 3px;
-  overflow: hidden;
-}
+@import '_variables.scss';
+$border-std: $code-border-std;
 
 .cm-s-nicks-theme {
   &.CodeMirror {

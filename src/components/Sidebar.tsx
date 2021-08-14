@@ -2,6 +2,8 @@ import { ReactNode, ReactElement } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import '../styles/_sidebar.scss';
+
 interface Props {
   children?: ReactNode,
 }

@@ -1,5 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 
+import '../styles/_page.scss';
+
 interface Props {
   sidebar?: () => ReactElement,
   children: ReactNode,

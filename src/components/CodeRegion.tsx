@@ -4,6 +4,9 @@ import CodeMirror from '@uiw/react-codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/mode/javascript/javascript';
 
+import '../styles/_code-region.scss';
+import '../styles/_cm-theme.scss';
+
 import { printData } from '../util';
 
 // TODO currently for catching errors I'm just wrapping the whole thing

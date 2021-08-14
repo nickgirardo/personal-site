@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import loadable from '@loadable/component';
-import './App.scss';
+import './styles/_common.scss';
 
 import {
   BrowserRouter as Router,
