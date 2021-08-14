@@ -160,7 +160,7 @@ const Literal = ({name, neg}: LiteralProps) => (
   <MathComponent display={ false } tex={ `${ neg ? String.raw`\neg` : '' }${ name }` } />
 );
 
-export const CmTest = ():ReactElement => {
+export const SATPost = ():ReactElement => {
   return (
     <Page sidebar={ DefaultSidebar }>
       <h2>As of yet unnamed blog post regarding SAT Solvers</h2>

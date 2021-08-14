@@ -12,7 +12,7 @@ import { About } from './containers/About';
 import { Test } from './containers/Test';
 import { Home } from './containers/Home';
 
-import { CmTest } from './containers/blog/CmTest';
+import { SATPost } from './containers/blog/SATPost';
 
 function App() {
   return (
@@ -21,7 +21,11 @@ function App() {
         <Switch>
           <Route path='/about' title='About' Component={ About } />
           <Route path='/test' title='Test' Component={ Test } />
-          <Route path='/blog/cm-test' title='Code Mirror Test' Component={ CmTest } />
+          <Route
+            path='/blog/introduction-to-sat-solvers'
+            title='Introduction to SAT Solvers'
+            Component={ SATPost }
+          />
           <Route path='/' title='Home' Component={ Home } />
         </Switch>
       </Router>
