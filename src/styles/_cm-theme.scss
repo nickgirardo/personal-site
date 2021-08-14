@@ -82,18 +82,17 @@ $border-std: 1px solid #888;
     color: hsl(327, 90%, 35%);
   }
 
-  span.cm-variable-2,
-  span.cm-tag { color: #690; }
-
+  span.cm-tag,
   .cm-def,
   .cm-property,
+  .cm-variable,
+  span.cm-variable-2,
   span.cm-variable-3,
   span.cm-def,
   span.cm-type {
     color: hsl(198, 92%, 35%);
   }
 
-  .cm-variable { color: #07a; }
   .cm-qualifier { color: #690; }
 
   .cm-comment { color:#666; font-weight:normal; }
