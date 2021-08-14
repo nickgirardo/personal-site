@@ -18,6 +18,17 @@ mjx-container {
   max-width: 80ch;
 }
 
+a {
+  &:link,
+  &:visited {
+    color: #0000EE;
+  }
+  &:link:active,
+  &:visited:active {
+    color: #0095FF;
+  }
+}
+
 @import 'styles/_variables.scss';
 @import 'styles/_sidebar.scss';
 @import 'styles/_page.scss';
