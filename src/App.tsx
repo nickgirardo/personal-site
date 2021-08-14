@@ -22,7 +22,7 @@ function App() {
           <Route path='/about' title='About' Component={ About } />
           <Route path='/test' title='Test' Component={ Test } />
           <Route
-            path='/blog/introduction-to-sat-solvers'
+            path='/blog/introduction-to-sat-solvers.html'
             title='Introduction to SAT Solvers'
             Component={ SATPost }
           />
