@@ -1,4 +1,5 @@
-import React from 'react';
+import { ReactElement } from 'react';
+import loadable from '@loadable/component';
 import './App.scss';
 
 import {
@@ -12,25 +13,26 @@ import { About } from './containers/About';
 import { Test } from './containers/Test';
 import { Home } from './containers/Home';
 
-import { SATPost } from './containers/blog/SATPost';
+const SATPost = loadable(() => import('./containers/blog/SATPost'), {
+  resolveComponent: (components) => components.SATPost,
+});
 
-function App() {
-  return (
-    <div className="app">
-      <Router>
-        <Switch>
-          <Route path='/about' title='About' Component={ About } />
-          <Route path='/test' title='Test' Component={ Test } />
-          <Route
-            path='/blog/introduction-to-sat-solvers.html'
-            title='Introduction to SAT Solvers'
-            Component={ SATPost }
-          />
-          <Route path='/' title='Home' Component={ Home } />
-        </Switch>
-      </Router>
-    </div>
-  );
-}
+const App = (): ReactElement => (
+  <div className="app">
+    <Router>
+      <Switch>
+        <Route path='/about' title='About'><About /></Route>
+        <Route path='/test' title='Test'><Test /></Route>
+        <Route
+          path='/blog/introduction-to-sat-solvers.html'
+          title='Introduction to SAT Solvers'
+        >
+          <SATPost />
+        </Route>
+        <Route path='/' title='Home'><Home /></Route>
+      </Switch>
+    </Router>
+  </div>
+);
 
 export default App;

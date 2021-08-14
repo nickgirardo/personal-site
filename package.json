@@ -20,6 +20,7 @@
     "prebuild": "if [ -d \"build\" ]; then rm -r \"build\"; fi",
     "build": "webpack --config conf/webpack.prod.js",
     "postbuild": "react-snap",
+    "profile": "webpack --config conf/webpack.prod.js --profile --json",
     "lint": "eslint src"
   },
   "eslintConfig": {
@@ -39,6 +40,8 @@
     ]
   },
   "devDependencies": {
+    "@loadable/component": "^5.15.0",
+    "@types/loadable__component": "^5.13.4",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",
     "css-loader": "^6.2.0",

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 import { Route as BaseRoute } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -6,14 +6,14 @@ import { Helmet } from 'react-helmet';
 interface Props {
   path: string,
   title: string,
-  Component: () => ReactElement,
+  children: ReactNode,
 };
 
-export const Route = (props: Props): ReactElement => {
-  return <BaseRoute path={ props.path }>
+export const Route = ({ path, title, children }: Props): ReactElement => {
+  return <BaseRoute path={ path }>
     <Helmet>
-      <title>{ props.title } &mdash; Nick Girardo</title>
+      <title>{ title } &mdash; Nick Girardo</title>
     </Helmet>
-    <props.Component />
+    { children }
   </BaseRoute>
 }
