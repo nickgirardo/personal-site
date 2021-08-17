@@ -19,6 +19,10 @@ export const printData = (data: any):string => {
     return `[${data.map(printData).join(', ')}]`
   }
 
+  if (data instanceof Error) {
+    return `Caught Error: ${data.message}`;
+  }
+
   if (typeof(data) === 'object') {
     const inner = Object.entries(data).map(([k, v]) => `${k}: ${printData(v)}`).join(', ');
     return `{${inner}}`;

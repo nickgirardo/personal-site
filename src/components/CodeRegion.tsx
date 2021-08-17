@@ -13,16 +13,15 @@ import { printData } from '../util';
 // in a try catch. This can be escaped by a user if they wanted
 // Not sure what the best way to handle the errors would be
 const prelude = `"use strict";
-try {
 console.log=this.consoleLog;
+try {
 (function () {`;
 
 const postscript = `})();
-this.flushConsole();
 } catch (e) {
   console.log(e);
-  this.flushConsole();
-}`;
+}
+this.flushConsole();`;
 
 // TODO take expected output to display for noscript users
 interface Props {
