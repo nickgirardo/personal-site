@@ -14,9 +14,11 @@ import { printData } from '../util';
 // Not sure what the best way to handle the errors would be
 const prelude = `"use strict";
 try {
-console.log=this.consoleLog;`;
+console.log=this.consoleLog;
+(function () {`;
 
-const postscript = `this.flushConsole();
+const postscript = `})();
+this.flushConsole();
 } catch (e) {
   console.log(e);
   this.flushConsole();
