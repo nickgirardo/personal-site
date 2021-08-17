@@ -21,6 +21,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tex$/i,
+        use: [
+          '@svgr/webpack',
+          {
+            loader: path.resolve('src/util/tex-loader.js'),
+          },
+        ],
+      },
+      {
         test: /\.raw$/i,
         use: 'raw-loader',
       },

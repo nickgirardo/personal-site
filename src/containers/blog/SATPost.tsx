@@ -1,7 +1,5 @@
 import { ReactElement } from 'react';
 
-import { MathComponent } from 'mathjax-react';
-
 import { Page } from '../../components/Page';
 import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
@@ -10,6 +8,18 @@ import { EquationBlock } from '../../components/EquationBlock';
 import BooleanSat from '../../res/boolean-sat.raw';
 
 import Formula1 from '../../res/sat-post/formula1.tex';
+import Or from '../../res/sat-post/or.tex';
+import And from '../../res/sat-post/and.tex';
+import Not from '../../res/sat-post/not.tex';
+import X_1 from '../../res/sat-post/x_1.tex';
+import X_2 from '../../res/sat-post/x_2.tex';
+import X_3 from '../../res/sat-post/x_3.tex';
+import NotCNF1 from '../../res/sat-post/notcnf1.tex';
+import NotCNF2 from '../../res/sat-post/notcnf2.tex';
+import NotCNF3 from '../../res/sat-post/notcnf3.tex';
+import CNF1 from '../../res/sat-post/cnf1.tex';
+import CNF2 from '../../res/sat-post/cnf2.tex';
+import CNF3 from '../../res/sat-post/cnf3.tex';
 
 const solutionAsClause = `function solutionAsClause(solution) {
   // The first element is always null (because 0 cannot be negated)
@@ -154,15 +164,6 @@ const clauses = [
 
 console.log(countSolutions(3, clauses));`;
 
-interface LiteralProps {
-  name: string,
-  neg?: boolean,
-}
-
-const Literal = ({name, neg}: LiteralProps) => (
-  <MathComponent display={ false } tex={ `${ neg ? String.raw`\neg` : '' }${ name }` } />
-);
-
 export const SATPost = ():ReactElement => {
   return (
     <Page sidebar={ DefaultSidebar }>
@@ -188,15 +189,14 @@ export const SATPost = ():ReactElement => {
         Don't worry if what's going on isn't clear.  The clauses in the above program can be translated to the following:
       </p>
       <EquationBlock><Formula1 /></EquationBlock>
-      <MathComponent tex={ String.raw`(x_1 \vee \neg x_2 ) \wedge (\neg x_1 \vee x_2 )` } />
       <p>
         If you are unfamiliar with mathematical notation, the above may be difficult to read.  The character&nbsp;
-        <MathComponent display={ false } tex={ String.raw`\vee` } />&nbsp;
+        <Or />&nbsp;
         means "or," the character&nbsp;
-        <MathComponent display={ false } tex={ String.raw`\wedge` } />&nbsp;
+        <And />&nbsp;
         means "and," the character&nbsp;
-        <MathComponent display={ false } tex={ String.raw`\neg` } />&nbsp;
-        means "not," and lastly <Literal name='x_1' /> and <Literal name='x_2' /> represent two "literals" which can be either <code>true</code> or <code>false</code>. You can think of literals like boolean variables.
+        <Not />&nbsp;
+        means "not," and lastly <X_1 /> and <X_2 /> represent two "literals" which can be either <code>true</code> or <code>false</code>. You can think of literals like boolean variables.
       </p>
       <p>
         It might be easier to make sense of this if we translated it back into a computer language:
@@ -223,35 +223,35 @@ export const SATPost = ():ReactElement => {
         The first clause says that the first literal must be <code>true</code>. The second clause says that the first literal must be <code>false</code>. Regardless of whether we set the first literal to <code>true</code> or <code>false</code> one of the clauses will not hold.  This means the problem is not satisfiable (UNSAT).
       </p>
       <p>
-        Before we go on, there is one more thing we should note.  The first parameter of <code>solveSat()</code> describes how many literals are in a problem.  The example above only has one, <Literal name='x_1' />.  Note that our first example has two literals and therefore passes <code>2</code> as the first parameter to <code>solveSat()</code>.
+        Before we go on, there is one more thing we should note.  The first parameter of <code>solveSat()</code> describes how many literals are in a problem.  The example above only has one, <X_1 />.  Note that our first example has two literals and therefore passes <code>2</code> as the first parameter to <code>solveSat()</code>.
       </p>
       <h3>Clause Structure</h3>
       <p>
         Let's examine the structure of the clauses.  Earlier I stated that <code>[[1, -2], [-1, 2]]</code> translates to&nbsp;
-        <MathComponent display={ false } tex={ String.raw`(x_1 \vee \neg x_2 ) \wedge (\neg x_1 \vee x_2 )` } />&mdash;
+        <Formula1 />&mdash;
         which itself corresponds to <code>(x1 || !x2) && (!x1 || x2)</code>. Clauses are provided to the solver in what's called Conjunctive Normal Form (CNF).
       </p>
       <p>
         A formula in CNF is a <i>conjunction</i> of clauses, where each clause is a <i>disjunction</i> of literals. A conjunction of clauses means the clauses are AND'ed together.  A disjunction of literals means the literals are OR'ed together. This greatly limits how we can express formulas, the following formulas are not in CNF:
       </p>
-      <MathComponent tex={ String.raw`(x_1 \wedge x_2 ) \vee (x_1 \wedge x_3 )` } />
+      <EquationBlock><NotCNF1 /></EquationBlock>
       <p>
         Here we see clauses with ANDs OR'ed together.  It must be the other way around
       </p>
-      <MathComponent tex={ String.raw`((x_1 \wedge x_2) \vee x_3 ) \wedge (x_1 \vee (x_2 \wedge x_3))` } />
+      <EquationBlock><NotCNF2 /></EquationBlock>
       <p>
         Here we see nested clauses
       </p>
-      <MathComponent tex={ String.raw`\neg (x_1 \vee x_3 ) \vee \neg (x_2 \vee x_3 )` } />
+      <EquationBlock><NotCNF3 /></EquationBlock>
       <p>
         Here we see clauses in whole negated.  Only the literals within the clauses may be negated. The clauses are also joined by an OR.
       </p>
       <p>
         While these restrictions may seem strict, all of the above formulas&mdash; and in fact <i>all</i> predicate formulas&mdash; can be represented in CNF.  The above three formulas are equivalent to the following:
       </p>
-      <MathComponent tex={ String.raw`(x_1) \wedge (x_2 \vee x_3 )` } />
-      <MathComponent tex={ String.raw`(x_1 \vee x_2) \wedge (x_1 \vee x_3 ) \wedge (x_2 \vee x_3)` } />
-      <MathComponent tex={ String.raw`(\neg x_1 \vee \neg x_2) \wedge (\neg x_3 )` } />
+      <EquationBlock><CNF1 /></EquationBlock>
+      <EquationBlock><CNF2 /></EquationBlock>
+      <EquationBlock><CNF3 /></EquationBlock>
       <p>
         I won't be explaining how to convert formulas into CNF.  The important thing to understand is that while CNF is stylistically constraining and may take getting used to, using CNF doesn't actully contrain what SAT Solvers can accomplish.
       </p>
@@ -268,7 +268,7 @@ export const SATPost = ():ReactElement => {
       </p>
       <h3>Making sense of the solver's output</h3>
       <p>
-        When running the above examples, you may have noted the solution was represented like <code>[null, false, true, false]</code>.  How a solver represent's its output may vary between solvers, but the solver that we are using in these examples returns an array where the first element is always null and each following element describes whether the literal at its index would be true or false.  The example <code>[null, false, true, false]</code> means the problem would be satisfied if <Literal name='x_1' /> were <code>false</code>, <Literal name='x_2' /> were <code>true</code>, and <Literal name='x_3' /> were <code>false</code>.
+        When running the above examples, you may have noted the solution was represented like <code>[null, false, true, false]</code>.  How a solver represent's its output may vary between solvers, but the solver that we are using in these examples returns an array where the first element is always null and each following element describes whether the literal at its index would be true or false.  The example <code>[null, false, true, false]</code> means the problem would be satisfied if <X_1 /> were <code>false</code>, <X_2 /> were <code>true</code>, and <X_3 /> were <code>false</code>.
       </p>
       <p>
         This output might make more sense if it were represented more similarly to how we represent clauses.  Bellow I've written a quick function to demonstrate this:
