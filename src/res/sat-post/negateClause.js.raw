@@ -1,0 +1,3 @@
+function negateClause(clause) {
+  return clause.map(b => b * -1);
+}

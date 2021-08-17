@@ -5,7 +5,11 @@ import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
 import { EquationBlock } from '../../components/EquationBlock';
 
-import BooleanSat from '../../res/boolean-sat.raw';
+import BooleanSat from '../../res/sat-post/boolean-sat.js.raw';
+import solutionAsClause from '../../res/sat-post/solutionAsClause.js.raw';
+import printSolution from '../../res/sat-post/printSolution.js.raw';
+import negateClause from '../../res/sat-post/negateClause.js.raw';
+import countSolutions from '../../res/sat-post/countSolutions.js.raw';
 
 import Formula1 from '../../res/sat-post/formula1.tex';
 import Or from '../../res/sat-post/or.tex';
@@ -21,46 +25,6 @@ import CNF1 from '../../res/sat-post/cnf1.tex';
 import CNF2 from '../../res/sat-post/cnf2.tex';
 import CNF3 from '../../res/sat-post/cnf3.tex';
 
-const solutionAsClause = `function solutionAsClause(solution) {
-  // The first element is always null (because 0 cannot be negated)
-  // We can safely ignore it
-  const relevant = solution.slice(1);
-
-  // Since we sliced off the first element we must add one to the index
-  // If v is false, return the the index (plus one)
-  // If v is false, return the negation of the index (plus one)
-  return relevant.map((b, ix) => b ? (ix + 1) : -(ix + 1));
-}`
-
-const printSolution = `function printSolution(solution) {
-  if (!solution) {
-    console.log('No solutions :(');
-  } else {
-    console.log('Solution found!', solutionAsClause(solution));
-  }
-}`;
-
-const negateClause = `function negateClause(clause) {
-  return clause.map(b => b * -1);
-}`;
-
-const countSolutions = `function countSolutions(values, clauses, loopLimit = 2**12) {
-  let numSolutions = 0;
-  while (numSolutions < loopLimit) {
-    const solution = satSolve(values, clauses);
-    if (!solution)
-      return numSolutions;
-
-    const newClause = negateClause(solutionAsClause(solution));
-    clauses.push(newClause);
-
-    numSolutions++;
-  }
-
-  // Error, too many solutions
-  // For now we'll just return -1 in this case
-  return -1;
-}`;
 
 const code1 = `const clauses = [
   [1, -2],
@@ -109,7 +73,6 @@ if (!solution) {
 }`;
 
 const code5 = `${solutionAsClause}
-
 const clauses = [
   [-1, -2],
   [-3],
@@ -124,7 +87,6 @@ if (!solution) {
 
 const code6 = `// To save space, the definition of solutionAsClause() is elided
 ${printSolution}
-
 const clauses = [
   [-1, -2],
   [-3],
@@ -137,7 +99,6 @@ printSolution(satSolve(3, clauses));`;
 
 const code7 = `// To save space, the definition of printSolution() is elided
 ${negateClause}
-
 const clauses = [
   [-1, -2],
   [-3],
@@ -156,7 +117,6 @@ if (firstSolution) {
 
 const code8 = `// To save space, the definition of negateClause() is elided
 ${countSolutions}
-
 const clauses = [
   [-1, -2],
   [-3],
@@ -167,9 +127,9 @@ console.log(countSolutions(3, clauses));`;
 export const SATPost = ():ReactElement => {
   return (
     <Page sidebar={ DefaultSidebar }>
-      <h2>As of yet unnamed blog post regarding SAT Solvers</h2>
+      <h2>Practical Introduction to SAT Solvers: Groundwork</h2>
       <p>
-        SAT Solvers are computer programs which solve the boolean satisfiability problem.  The boolean satisfiability problem is the problem of determining if a given boolean formula has solutions.  For instance, the formula <code>x || !y</code> is satisfiable (or SAT in the academic parlance).  It will be satisfied if <code>x</code> is <code>true</code> or if <code>y</code> is <code>false</code>. The formula <code>x && !x</code> is usatisfiable (or UNSAT in the academic parlance).
+        SAT Solvers are computer programs which solve the boolean satisfiability problem.  The boolean satisfiability problem is the problem of determining if a given boolean formula has solutions.  For instance, the formula <code>x || !y</code> is satisfiable (or SAT in academic parlance).  It will be satisfied if <code>x</code> is <code>true</code> or if <code>y</code> is <code>false</code>. The formula <code>x && !x</code> is usatisfiable (or UNSAT in academic parlance).
       </p>
       <p>
         SAT Solvers are a kind of constraint solver.  This means that we give the solver a series of constraints (in this case the boolean formula) as input and it works to find a solution.  The inner workings of SAT Solvers are fascinating, but one doesn't need to know exactly how they work to make use of them.  In this post I will treat SAT Solvers like black boxes, taking their functioning for granted.  The specific SAT Solver used in this post is <a href="https://github.com/cemulate/SAT.js">SAT.js</a> (or boolean-sat on npm) as it is trivial to run it in the browser, but the ideas presented here should work for any SAT Solver.
