@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@loadable/component": "^5.15.0",
+    "@svgr/webpack": "^5.5.0",
     "@types/loadable__component": "^5.13.4",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",

@@ -1,0 +1,11 @@
+.equation-block {
+  display: block;
+  text-align: center;
+  max-width: 80ch;
+
+  > svg {
+    overflow: visible;
+    min-width: 1px;
+    min-height: 1px;
+  }
+}

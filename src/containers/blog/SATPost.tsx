@@ -5,8 +5,11 @@ import { MathComponent } from 'mathjax-react';
 import { Page } from '../../components/Page';
 import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
+import { EquationBlock } from '../../components/EquationBlock';
 
 import BooleanSat from '../../res/boolean-sat.raw';
+
+import Formula1 from '../../res/sat-post/formula1.tex';
 
 const solutionAsClause = `function solutionAsClause(solution) {
   // The first element is always null (because 0 cannot be negated)
@@ -184,6 +187,7 @@ export const SATPost = ():ReactElement => {
       <p>
         Don't worry if what's going on isn't clear.  The clauses in the above program can be translated to the following:
       </p>
+      <EquationBlock><Formula1 /></EquationBlock>
       <MathComponent tex={ String.raw`(x_1 \vee \neg x_2 ) \wedge (\neg x_1 \vee x_2 )` } />
       <p>
         If you are unfamiliar with mathematical notation, the above may be difficult to read.  The character&nbsp;
