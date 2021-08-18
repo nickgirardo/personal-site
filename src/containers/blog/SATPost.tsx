@@ -182,7 +182,7 @@ export const SATPost = ():ReactElement => {
       <p>
         Before we go on, there is one more thing we should note.  The first parameter of <code>solveSat()</code> describes how many literals are in a problem.  The example above only has one, <X_1 />.  Note that our first example has two literals and therefore passes <code>2</code> as the first parameter to <code>solveSat()</code>.
       </p>
-      <h3>Clause Structure</h3>
+      <h3>Clause structure</h3>
       <p>
         Let's examine the structure of the clauses.  Earlier I stated that <code>[[1, -2], [-1, 2]]</code> translates to&nbsp;
         <Formula1 />&mdash;
