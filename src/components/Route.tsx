@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 
 import { Route as BaseRoute } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 interface Props {
   path: string,
