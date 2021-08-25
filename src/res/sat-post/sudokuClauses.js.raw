@@ -1,0 +1,46 @@
+function sudokuClauses(givenCells) {
+  // Storing the cells and digits we'll iterate over as an array
+	// Right now we're just worried about two cells
+	const cells = [...Array(81).keys()];
+	const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+	// This helper function maps a cell and digit numbers to a literal number
+	function literal(cell, digit) {
+	  return (cell * 9) + digit;
+	}
+
+  const clauses = [];
+  
+  // Constrain the puzzle with the given cells
+  for (const [cell, digit] of givenCells) {
+    clauses.push([literal(cell, digit)]);
+  }
+
+  // Loop over each cell
+  for (const cell of cells) {
+    // This means "A cell must have some of the given values"
+    clauses.push(digits.map(d => literal(cell, d)));
+
+    for (const digit of digits) {
+      // This iterator gives us every digit after the current digit
+      for (const other of digits.slice(digit)) {
+        // This means "A cell cannot be both of these values"
+        clauses.push([-literal(cell, digit), -literal(cell, other)]);
+      }
+    }
+
+    // This iterator gives us every cell after the current cell
+    // The "+ 1" is needed here and not above because cells is 0 based
+    for (const other of cells.slice(cell + 1)) {
+      // Do we need to make sure the cell values differ?
+      if (cellsCollide(cell, other)) {
+        for (const digit of digits) {
+          clauses.push([-literal(cell, digit), -literal(other, digit)]);
+        }
+      }
+    }
+  }
+  
+  // Tuple of (number of values, clauses)
+  return [cells.length*digits.length, clauses];
+}

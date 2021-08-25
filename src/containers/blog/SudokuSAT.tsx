@@ -3,13 +3,13 @@ import { ReactElement } from 'react';
 import { Page } from '../../components/Page';
 import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
-import { EquationBlock } from '../../components/EquationBlock';
 
 import BooleanSat from '../../res/sat-post/boolean-sat.js.raw';
 import solutionAsClause from '../../res/sat-post/solutionAsClause.js.raw';
 import printSolution from '../../res/sat-post/printSolution.js.raw';
 import negateClause from '../../res/sat-post/negateClause.js.raw';
 import countSolutions from '../../res/sat-post/countSolutions.js.raw';
+import sudokuClauses from '../../res/sat-post/sudokuClauses.js.raw';
 
 import X_1 from '../../res/sat-post/x_1.tex';
 import X_2 from '../../res/sat-post/x_2.tex';
@@ -98,6 +98,77 @@ const secondCellClauses = `const secondCellClauses = [
   [-16, -18],
   [-17, -18],
 ];`
+
+
+const sudokuClausesTwoCell = `function sudokuClauses(givenCells) {
+  const cells = [0, 1];
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  // This helper function tells us if two cells are in the same row
+  // If so, they must not contain the same value
+  function sameRow(cell1, cell2) {
+    return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
+  }
+
+  // This helper function maps a cell and digit numbers to a literal number
+  function literal(cell, digit) {
+    return (cell * 9) + digit;
+  }
+
+  const clauses = [];
+  
+  // Constrain the puzzle with the given cells
+  for (const [cell, digit] of givenCells) {
+    clauses.push([literal(cell, digit)]);
+  }
+
+  // Loop over each cell
+  for (const cell of cells) {
+    // This means "A cell must have some of the given values"
+    clauses.push(digits.map(d => literal(cell, d)));
+
+    for (const digit of digits) {
+      // This iterator gives us every digit after the current digit
+      for (const other of digits.slice(digit)) {
+        // This means "A cell cannot be both of these values"
+        clauses.push([-literal(cell, digit), -literal(cell, other)]);
+      }
+    }
+
+    // This iterator gives us every cell after the current cell
+    // The "+ 1" is needed here and not above because cells is 0 based
+    for (const other of cells.slice(cell + 1)) {
+      // If we aren't in the same row no need to add this check
+      if (!sameRow(cell, other))
+        continue;
+
+      for (const digit of digits) {
+        clauses.push([-literal(cell, digit), -literal(other, digit)]);
+      }
+    }
+  }
+  
+  return [cells.length*digits.length, clauses];
+}`
+
+const cellsCollide = `function sameRow(cell1, cell2) {
+  return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
+}
+
+function sameColumn(cell1, cell2) {
+  return cell1%9 === cell2%9;
+}
+
+function sameRegion(cell1, cell2) {
+  return Math.floor(cell1/27) === Math.floor(cell2/27) &&
+    Math.floor((cell1%9)/3) === Math.floor((cell2%9)/3);
+}
+
+function cellsCollide(cell1, cell2) {
+  return sameRow(cell1, cell2) ||
+    sameColumn(cell1, cell2) ||
+    sameRegion(cell1, cell2);
+}`;
 
 const oneCell1 = `const clauses = [
   // The nine possible values for our first cell
@@ -215,19 +286,327 @@ const twoCell2 = `const clauses = [
   [-9, -18],
 ];
 
-console.log(countSolutions(18, clauses));
-console.log(clauses.length);`
+console.log('number of clauses: ', clauses.length);
+console.log(countSolutions(18, clauses));`
 
 const genClause1 = `function sudokuClauses() {
   return [[1, 2, 3, 4, 5, 6, 7, 8, 9]];
 }
 
 const clauses = sudokuClauses();
-console.log(clauses);
 
-// Ok, now this should be 9 for sure!
+// This same set of clauses gave us 511 last time
+// Let's make sure that hasn't changed
 console.log(countSolutions(9, clauses));`
 
+const genClause2 = `function sudokuClauses() {
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const clauses = [];
+
+  // This means "A cell must have some of the given values"
+  clauses.push(digits);
+
+  for (const digit of digits) {
+    // This iterator gives us every digit after the current digit
+    for (const other of digits.slice(digit)) {
+      // This means "A cell cannot be both of these values"
+      clauses.push([-digit, -other]);
+    }
+  }
+
+  return clauses;
+}
+
+const clauses = sudokuClauses();
+
+console.log(countSolutions(9, clauses));`
+
+const genClause3 = `function sudokuClauses() {
+  // Storing the cells and digits we'll iterate over as an array
+	// Right now we're just worried about two cells
+	const cells = [0, 1];
+	const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+	// This helper function tells us if two cells are in the same row
+	// If so, they must not contain the same value
+	function sameRow(cell1, cell2) {
+	  return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
+	}
+
+	// This helper function maps a cell and digit numbers to a literal number
+	function literal(cell, digit) {
+	  return (cell * 9) + digit;
+	}
+
+  const clauses = [];
+  
+  // Loop over each cell
+  for (const cell of cells) {
+    // This means "A cell must have some of the given values"
+    clauses.push(digits.map(d => literal(cell, d)));
+
+    for (const digit of digits) {
+      // This iterator gives us every digit after the current digit
+      for (const other of digits.slice(digit)) {
+        // This means "A cell cannot be both of these values"
+        clauses.push([-literal(cell, digit), -literal(cell, other)]);
+      }
+    }
+
+    // This iterator gives us every cell after the current cell
+    // The "+ 1" is needed here and not above because cells is 0 based
+    for (const other of cells.slice(cell + 1)) {
+      // If we aren't in the same row no need to add this check
+      if (!sameRow(cell, other))
+        continue;
+
+      for (const digit of digits) {
+        clauses.push([-literal(cell, digit), -literal(other, digit)]);
+      }
+    }
+  }
+  
+  // Tuple of (number of values, clauses)
+  return [cells.length*digits.length, clauses];
+}
+
+const [numValues, clauses] = sudokuClauses();
+console.log('number of clauses: ', clauses.length);
+
+// To make sure we're setting the number of literals correctly
+// we can base it off the number of cells and digits
+console.log(countSolutions(numValues, clauses));`;
+
+
+const givenCells = `// This helper function tells us if two cells are in the same row
+// If so, they must not contain the same value
+function sameRow(cell1, cell2) {
+  return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
+}
+
+function sudokuClauses(givenCells) {
+  // Storing the cells and digits we'll iterate over as an array
+	// Right now we're just worried about two cells
+	const cells = [0, 1];
+	const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+	// This helper function maps a cell and digit numbers to a literal number
+	function literal(cell, digit) {
+	  return (cell * 9) + digit;
+	}
+
+  const clauses = [];
+  
+  // Constrain the puzzle with the given cells
+  for (const [cell, digit] of givenCells) {
+    clauses.push([literal(cell, digit)]);
+  }
+
+  // Loop over each cell
+  for (const cell of cells) {
+    // This means "A cell must have some of the given values"
+    clauses.push(digits.map(d => literal(cell, d)));
+
+    for (const digit of digits) {
+      // This iterator gives us every digit after the current digit
+      for (const other of digits.slice(digit)) {
+        // This means "A cell cannot be both of these values"
+        clauses.push([-literal(cell, digit), -literal(cell, other)]);
+      }
+    }
+
+    // This iterator gives us every cell after the current cell
+    // The "+ 1" is needed here and not above because cells is 0 based
+    for (const other of cells.slice(cell + 1)) {
+      // If we aren't in the same row no need to add this check
+      if (!sameRow(cell, other))
+        continue;
+
+      for (const digit of digits) {
+        clauses.push([-literal(cell, digit), -literal(other, digit)]);
+      }
+    }
+  }
+  
+  // Tuple of (number of values, clauses)
+  return [cells.length*digits.length, clauses];
+}
+
+// Nothing should change here, expect 72 like before
+console.log(countSolutions(...sudokuClauses([])));
+
+// With one cell set the other should have 8 digits to choose from
+console.log(countSolutions(...sudokuClauses([[1, 4]])));
+
+// If both cells are set, that is the only possible configuration
+// So this should give us one total solution
+console.log(countSolutions(...sudokuClauses([[0, 8], [1, 1]])));
+
+// These are not valid puzzles, there should be no solutions
+console.log(countSolutions(...sudokuClauses([[0, 3], [0, 7]])));
+console.log(countSolutions(...sudokuClauses([[0, 5], [1, 5]])));`
+
+const uniqSolv1 = `function isUniquelySolvable(values, clauses) {
+  const solutions = countSolutions(values, clauses, 2);
+
+  switch (solutions) {
+    case 0:
+      return [false, 'No solutions'];
+    case 1:
+      return [true, 'Looks good!'];
+    case -1:
+      return [false, 'Multiple solutions'];
+    default: 
+      // This should never be reached
+      throw new Error('Unexpected number of solutions');
+  }
+}
+
+// Empty board, not uniquely solvable
+console.log(isUniquelySolvable(...sudokuClauses([])));
+
+// Only one cell set, the other still has 8 options
+console.log(isUniquelySolvable(...sudokuClauses([[1, 5]])));
+
+// Both cells set, this one looks good!
+console.log(isUniquelySolvable(...sudokuClauses([[0, 3], [1, 4]])));
+
+// Two invalid puzzles
+console.log(isUniquelySolvable(...sudokuClauses([[0, 5], [1, 5]])));
+console.log(isUniquelySolvable(...sudokuClauses([[0, 7], [0, 6]])));`;
+
+const fullBoard1 = `function sameColumn(cell1, cell2) {
+  return cell1%9 === cell2%9;
+}
+
+function sameRegion(cell1, cell2) {
+  return Math.floor(cell1/27) === Math.floor(cell2/27) &&
+    Math.floor((cell1%9)/3) === Math.floor((cell2%9)/3);
+}
+
+console.log('sameColumn');
+console.log(sameColumn(0, 1));
+console.log(sameColumn(0, 18));
+console.log(sameColumn(5, 32));
+
+console.log('sameRegion');
+console.log(sameRegion(0, 12));
+console.log(sameRegion(0, 18));
+console.log(sameRegion(36, 47));`
+
+const fullBoard2 = `function cellsCollide(cell1, cell2) {
+  return sameRow(cell1, cell2) ||
+    sameColumn(cell1, cell2) ||
+    sameRegion(cell1, cell2);
+}
+
+// Same row
+console.log(cellsCollide(0, 8));
+// Same column
+console.log(cellsCollide(7, 79));
+// Same region
+console.log(cellsCollide(29, 45));
+// Different row, column and region: No collision
+console.log(cellsCollide(5, 80));`;
+
+const fullBoard2prelude = `function sameRow(cell1, cell2) {
+  return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
+}
+
+function sameColumn(cell1, cell2) {
+  return cell1%9 === cell2%9;
+}
+
+function sameRegion(cell1, cell2) {
+  return Math.floor(cell1/27) === Math.floor(cell2/27) &&
+    Math.floor((cell1%9)/3) === Math.floor((cell2%9)/3);
+}`;
+
+const fullBoard3 = `const cells = [...Array(81).keys()];
+
+console.log(cells.length);
+console.log(cells);`;
+
+
+const fullBoard4 = `// To save space, the definition of cellsCollide() is elided
+${sudokuClauses}`;
+
+const fullBoard5 = `const board = [
+  [0, 5], [4, 3], [5, 1], [7, 4], [8, 6],
+  [9, 4], [10, 1], [12, 7], [17, 2],
+  [24, 7], [26, 8],
+  [30, 1], [32, 2], [34, 7],
+  [38, 4], [42, 1],
+  [46, 8], [48, 3], [50, 4],
+  [54, 6], [56, 3],
+  [63, 8], [68, 9], [70, 6], [71, 7],
+  [72, 7], [73, 5], [75, 6], [76, 4], [80, 9]
+];
+
+printSolution(satSolve(...sudokuClauses(board)));`;
+
+const formatting1 = `// This helper function maps a cell and digit numbers to a literal number
+function literal(cell, digit) {
+  return (cell * 9) + digit;
+}`;
+
+const formatting2 = `// This inverts literal
+function extract(value) {
+  const cell = Math.floor((value-1) / 9);
+  const digit = ((value - 1) % 9) + 1;
+
+  return [cell, digit];
+}
+
+// Note that increasing the input by multiples of 9 only changes the cell
+console.log(extract(7));
+console.log(extract(16));
+console.log(extract(457));
+
+// There and back again
+console.log(literal(...extract(700)));
+console.log(extract(literal(10, 6)));`;
+
+const extract = `function extract(value) {
+  const cell = Math.floor((value-1) / 9);
+  const digit = ((value - 1) % 9) + 1;
+
+  return [cell, digit];
+}`;
+
+const formatting3 = `const board = [
+  [0, 5], [4, 3], [5, 1], [7, 4], [8, 6],
+  [9, 4], [10, 1], [12, 7], [17, 2],
+  [24, 7], [26, 8],
+  [30, 1], [32, 2], [34, 7],
+  [38, 4], [42, 1],
+  [46, 8], [48, 3], [50, 4],
+  [54, 6], [56, 3],
+  [63, 8], [68, 9], [70, 6], [71, 7],
+  [72, 7], [73, 5], [75, 6], [76, 4], [80, 9]
+];
+
+const solution = solutionAsClause(satSolve(...sudokuClauses(board)));
+
+console.log(solution.filter(v => v > 0).map(extract));`;
+
+const formatting4 = `const board = [
+  [0, 5], [4, 3], [5, 1], [7, 4], [8, 6],
+  [9, 4], [10, 1], [12, 7], [17, 2],
+  [24, 7], [26, 8],
+  [30, 1], [32, 2], [34, 7],
+  [38, 4], [42, 1],
+  [46, 8], [48, 3], [50, 4],
+  [54, 6], [56, 3],
+  [63, 8], [68, 9], [70, 6], [71, 7],
+  [72, 7], [73, 5], [75, 6], [76, 4], [80, 9]
+];
+
+const solution = solutionAsClause(satSolve(...sudokuClauses(board)));
+const digitValues = solution.filter(v => v > 0).map(v => extract(v)[1]);
+
+for (const row of [0, 1, 2, 3, 4, 5, 6, 7, 8])
+  console.log(digitValues.slice(row*9, (row+1)*9));`;
 
 export const SudokuSAT = ():ReactElement => {
   return (
@@ -308,7 +687,7 @@ export const SudokuSAT = ():ReactElement => {
       </p>
       <CodeRegion
         code={ twoCell2 }
-        codeHeight='23em'
+        codeHeight='24em'
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${firstCellClauses}${secondCellClauses}` }
       />
       <p>
@@ -318,17 +697,186 @@ export const SudokuSAT = ():ReactElement => {
         You might notice that this formula has 72 possible equations.  This makes sense.  At first we can choose between any of nine possible values, but afterwards the second cell only has eight options available.  <code>9 * 8 === 72</code>.
       </p>
       <p>
-        You also might notice that we're up to 155 total clauses.  This is too many to continue adding clauses manually.  Let's get started writing a program to generate our clauses for us.
+        You also might notice that we're up to 83 total clauses.  This is too many to continue adding clauses manually.  Let's get started writing a program to generate our clauses for us.
       </p>
       
       <h3>Generating clauses</h3>
+      <p>
+        Returning clauses created by a function should be no different than writing them ourselves.  As a simple test, let's return a set of clauses we used briefly earlier.
+      </p>
       <CodeRegion
         code={ genClause1 }
         codeHeight='13em'
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
       />
+      <p>
+        Now let's write a function which generates our first cell for us.
+      </p>
+      <CodeRegion
+        code={ genClause2 }
+        codeHeight='29em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
+      />
+      <p>
+        This works, but we're taking a lot of shortcuts here.  If we want to generate clauses for two cells we will have to be a bit more rigorous.  For one, we're making the assumption here that every digit is it's value&mdash; this only hold true on the first cell.
+      </p>
+      <CodeRegion
+        code={ genClause3 }
+        codeHeight='40em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
+      />
+      <p>
+        Note that we have the same 72 solutions and 83 clauses as when we wrote the clauses by hand.
+      </p>
+      <p>
+        We've made a few helper functions.  <code>sameRow</code> takes in two cells as arguments and returns <code>true</code> if they are in the same row.  Later we will need to implement <code>sameColumn</code> and <code>sameRegion</code> but <code>sameRow</code> is enough for now.  <code>literal</code> takes a cell and a digit as arguments and returns the relevant literal id.  In our previous example this wasn't needed as we only had one cell (cell 0) and <code>literal(0, digit) === digit</code>.
+      </p>
+      <p>
+        Even with these new helpers our <code>sudokuClauses</code> function has gotten much more complex.  The most important change is that we now iterate over an array of cells.  Right now our array of cells has only two entries, but this will work the same when all 81 cells are present.  We also have a check to make sure cells in the same row don't share a value.  Later this will need to be expanded to also check if cells are in the same column or region as well.
+      </p>
+      <p>
+        This is basically all of the groundwork for generating clauses for all 81 cells.  Before we get to that, let's check out an important part of Sudoku we haven't touched on as of yet.
+      </p>
+
+      <h3>Given cells</h3>
+      <p>
+        A Sudoku puzzle is defined by which cells are given and what their values are.  It doesn't make any sense to have a Sudoku solver without accounting for given cells.
+      </p>
+      <p>
+        How can we represent given cells as CNF clauses?  This is actually fairly trivial.  Setting the required literal to true is all that's required.
+      </p>
+      <p>
+        We can modify `sudokuClauses` to take a list of given cells as an argument.  We'll represent the given cells as a tuple of <code>[cell, digit]</code> (JavaScript doesn't really have proper tuple support, a subarray will do).  This means, for instance, that passing in <code>[[47, 3], [50, 7]]</code> will state that cell 47 must contain 3 and cell 50 must contain 7.
+      </p>
+      <CodeRegion
+        code={ givenCells }
+        codeHeight='58em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
+      />
+      <p>
+        You can see that with these changes we're able to test some of our assumptions.  For instance, with <code>oneCellSet</code> in the above example we set cell 1 to 4.  This SAT Solver finds 8 possible solutions as we would expect (corresponding to cell 0 being equal to 1, 2, 3, 5, 6, 7, 8, and 9).  In the other cases we see that setting both cells to valid digits gives us exactly one solution and the two invalid puzzles have 0 solutions.  When we pass an empty array we get the same 72 solutions as before we accounted for given cells.
+      </p>
+
+      <h3>Unique solvability</h3>
+      <p>
+        This will be the last diversion before putting the final solver together.  A proper sudoku puzzle is "uniquely solvable."  This means that not only can the puzzle be solved, but that it has exactly one valid solution.  My original motivation for setting out to build a sudoku solver was actually to build a checker to make sure puzzles made in a Sudoku builder I was working on were uniquely solvable.  I decided to learn about SAT Solvers towards that end and in the process became fascinated by them.
+      </p>
+      <p>
+        Aside from my bias, I wanted to introduce the topic of unique solvability before adding more cells to our board as the solution space will explode.  A single empty row has <code>9! === 362880</code> possible solutions.  While we lose some information when we change from counting solutions to simply checking for unique solvability, this change can be helpful for sparse, larger boards.
+      </p>
+      <p>
+        Fortunately, implementing a unique solvability check is pretty simple.  Let's start by examining the <code>countSolutions</code> function written in the previous post
+      </p>
+      <strong>
+        TODO link to post above!
+      </strong>
+      <CodeRegion
+        code={ countSolutions }
+        codeHeight='24em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}` }
+      />
+      <p>
+        The function takes an optional parameter <code>loopLimit</code>.  While the mean reason for <code>loopLimit</code> was to avoid massive search spaces melting your computer, it can also be used to make sure we only have one valid solution.
+      </p>
+      <CodeRegion
+        code={ uniqSolv1 }
+        codeHeight='36em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${sudokuClausesTwoCell}` }
+      />
+      <p>
+        Because we're passing in a <code>loopLimit</code> of 2, if we find 2 or more solutions we return -1.
+      </p>
+      <p>
+        <code>isUniquelySolvable</code> returns a tuple of whether the funciton is uniquely solvable and a reason.  This is helpfull because it often might be important to understand if a puzzle is not uniquely solvable because it has no solutions or many solutions.  Unfortunately, this is very cumbersome in JavaScript.  In TypeScript this would be much more ergonomic&mdash; an enum would make this clean and understandable.  More importantly, using the result wouldn't require destructuring the array.  We could use an integer to represent the return value as TypeScript does under the hood, however without a typechecker this is far too error prone to be a reasonable approach.
+      </p>
+      <p>
+        Regardless, with this minor excursion out of the way we can move on to implementing the rest of the board
+      </p>
+
+      <h3>The rest of the board</h3>
+      <p>
+        When we were working with two cells, we created a helper function <code>sameRow</code> to check if two cells were in the same row.  Now that we're adding more cells, we'll require similar <code>sameColumn</code> and <code>sameRegion</code> methods.  <code>sameColumn</code> is pretty straightforward but <code>sameRegion</code> might take some effort to wrap your head around.
+      </p>
+      <CodeRegion
+        code={ fullBoard1 }
+        codeHeight='24em'
+      />
+      <p>
+        Another simple helper function can wrap these three
+      </p>
+      <CodeRegion
+        code={ fullBoard2 }
+        codeHeight='19em'
+        hiddenPrelude={ fullBoard2prelude }
+      />
+      <p>
+        We also need to modify our array of cell numbers.  With only two cells it was trivial to hardcode the array.  While this is still possible with 81 cells, that's not how I want to spend my time.
+      </p>
+      <CodeRegion
+        code={ fullBoard3 }
+        codeHeight='7em'
+      />
+      <p>
+        The above line is a quick and easy way to build a range of numbers in JavaScript.  This is not the most performant way of building this range, but in this context any minor performance penalty is negligable.  The lack of a proper standard range method is something that constantly irks me.
+      </p>
+      <p>
+        These are the only minor changes required to our previous <code>sudokuClauses</code> function to handle full boards.  Here is the code in full:
+      </p>
+      <CodeRegion
+        code={ fullBoard4 }
+        codeHeight='44em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${cellsCollide}` }
+      />
+      <p>
+        With this set up, we can give our solver its first board to solve.
+      </p>
+      <strong> TODO board image here </strong>
+      <p>
+        All we need to do is encode our board in the constant <code>board</code> bellow and everything else is already taken care of.
+      </p>
+      <CodeRegion
+        code={ fullBoard5 }
+        codeHeight='18em'
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${cellsCollide}${sudokuClauses}` }
+      />
+      <p>
+        It looks like we've solved our first sudoku board!  Well it's kind of hard to tell with the current format.  Fortunately, formatting our solution in a way that can be easily understood is pretty easy.
+      </p>
+
+      <h3>Formatting a solution</h3>
+      <p>
+        In the solution printed above, every negative value corresponds to a digit that doesn't belong in a given cell.  Because we are only concerned with the digits that do belong in cells we can ignore them all.  With only the important values left let's recall our helper function <code>literal()</code>.
+      </p>
+      <CodeRegion
+        code={ formatting1 }
+        codeHeight='7em'
+      />
+      <p>
+        With the knowledge that <code>digit</code> is between 1 and 9 we can invert this function:
+      </p>
+      <CodeRegion
+        code={ formatting2 }
+        hiddenPrelude={ formatting1 }
+        codeHeight='22em'
+      />
+      <p>
+        Now we have everything we need to transform our solution to the same tuple format we pass into <code>sudokuClauses</code>.
+      </p>
+      <CodeRegion
+        code={ formatting3 }
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${cellsCollide}${sudokuClauses}${extract}` }
+        codeHeight='20em'
+      />
+      <p>
+        Although printing the solution in the shape of a board will probably be easier for humans to understand.
+      </p>
+      <CodeRegion
+        code={ formatting4 }
+        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${cellsCollide}${sudokuClauses}${extract}` }
+        codeHeight='23em'
+      />
       { /* TODO remove */ }
-      <div style={{'height': '120em'}} />
+      <div style={{'height': '20em'}} />
     </Page>
   );
 };
