@@ -99,58 +99,6 @@ const secondCellClauses = `const secondCellClauses = [
   [-17, -18],
 ];`
 
-
-const sudokuClausesTwoCell = `function sudokuClauses(givenCells) {
-  const cells = [0, 1];
-  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-  // This helper function tells us if two cells are in the same row
-  // If so, they must not contain the same value
-  function sameRow(cell1, cell2) {
-    return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
-  }
-
-  // This helper function maps a cell and digit numbers to a literal number
-  function literal(cell, digit) {
-    return (cell * 9) + digit;
-  }
-
-  const clauses = [];
-  
-  // Constrain the puzzle with the given cells
-  for (const [cell, digit] of givenCells) {
-    clauses.push([literal(cell, digit)]);
-  }
-
-  // Loop over each cell
-  for (const cell of cells) {
-    // This means "A cell must have some of the given values"
-    clauses.push(digits.map(d => literal(cell, d)));
-
-    for (const digit of digits) {
-      // This iterator gives us every digit after the current digit
-      for (const other of digits.slice(digit)) {
-        // This means "A cell cannot be both of these values"
-        clauses.push([-literal(cell, digit), -literal(cell, other)]);
-      }
-    }
-
-    // This iterator gives us every cell after the current cell
-    // The "+ 1" is needed here and not above because cells is 0 based
-    for (const other of cells.slice(cell + 1)) {
-      // If we aren't in the same row no need to add this check
-      if (!sameRow(cell, other))
-        continue;
-
-      for (const digit of digits) {
-        clauses.push([-literal(cell, digit), -literal(other, digit)]);
-      }
-    }
-  }
-  
-  return [cells.length*digits.length, clauses];
-}`
-
 const cellsCollide = `function sameRow(cell1, cell2) {
   return Math.floor(cell1 / 9) === Math.floor(cell2 / 9);
 }
@@ -445,35 +393,6 @@ console.log(countSolutions(...sudokuClauses([[0, 8], [1, 1]])));
 // These are not valid puzzles, there should be no solutions
 console.log(countSolutions(...sudokuClauses([[0, 3], [0, 7]])));
 console.log(countSolutions(...sudokuClauses([[0, 5], [1, 5]])));`
-
-const uniqSolv1 = `function isUniquelySolvable(values, clauses) {
-  const solutions = countSolutions(values, clauses, 2);
-
-  switch (solutions) {
-    case 0:
-      return [false, 'No solutions'];
-    case 1:
-      return [true, 'Looks good!'];
-    case -1:
-      return [false, 'Multiple solutions'];
-    default: 
-      // This should never be reached
-      throw new Error('Unexpected number of solutions');
-  }
-}
-
-// Empty board, not uniquely solvable
-console.log(isUniquelySolvable(...sudokuClauses([])));
-
-// Only one cell set, the other still has 8 options
-console.log(isUniquelySolvable(...sudokuClauses([[1, 5]])));
-
-// Both cells set, this one looks good!
-console.log(isUniquelySolvable(...sudokuClauses([[0, 3], [1, 4]])));
-
-// Two invalid puzzles
-console.log(isUniquelySolvable(...sudokuClauses([[0, 5], [1, 5]])));
-console.log(isUniquelySolvable(...sudokuClauses([[0, 7], [0, 6]])));`;
 
 const fullBoard1 = `function sameColumn(cell1, cell2) {
   return cell1%9 === cell2%9;
