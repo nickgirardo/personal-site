@@ -38,9 +38,10 @@ export const CodeRegion = (props: Props):ReactElement => {
 
   const exec = (program: string) => {
     const consoleBuffer = [] as string[];
+    const realConsole = console.log.bind(this);
     const fakeConsole = (...data: any[]) => {
-      // TODO we can do better than just .toString() here
-      // Can check here for guidance https://github.com/whatwg/console
+      // Pipe the data to the actual console as well
+      realConsole(...data);
       const newData: string = data.map(printData).join(', ');
       consoleBuffer.push(newData);
     };
@@ -84,6 +85,7 @@ export const CodeRegion = (props: Props):ReactElement => {
               keyMap: 'sublime',
               mode: 'none',
               readOnly: 'nocursor',
+              lineWrapping: true,
               lineNumbers: false,
             }}
           />
