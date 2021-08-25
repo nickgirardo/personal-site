@@ -295,7 +295,7 @@ const genClause1 = `function sudokuClauses() {
 
 const clauses = sudokuClauses();
 
-// This same set of clauses gave us 511 last time
+// This set of clauses gave us 511 last time
 // Let's make sure that hasn't changed
 console.log(countSolutions(9, clauses));`
 
@@ -633,7 +633,7 @@ export const SudokuSAT = ():ReactElement => {
 
       <h3>The first cell</h3>
       <p>
-        Each cell can contain any digit from one to nine.  Unfortunately, boolean logic doesn't simply allow us to assign a literal any of nine values, we are limited to two values: <code>true</code> and <code>false</code>.  Instead of trying to cram all nine values into a single literal, we can instead build more capabale structures from multiple literals.  For simplicity's sake, we can say that <X_1 /> means that our cell contains <code>1</code>, <X_2 /> means that our cell contains <code>2</code>, and so on.  With nine literals, <X_1TOX_9 />, we can represent each of the nine possible states for our cell.
+        Each cell can contain any digit from one to nine.  Unfortunately, boolean logic doesn't simply allow us to assign a literal any of nine values, we are limited to two values: <code>true</code> and <code>false</code>.  Instead of trying to cram all nine values into a single literal, we can instead build more capabale structures from multiple literals.  For simplicity's sake, we can say that <X_1 /> means that our cell contains 1, <X_2 /> means that our cell contains 2, and so on.  With nine literals, <X_1TOX_9 />, we can represent each of the nine possible states for our cell.
       </p>
       <p>
         Let's try to implement this:
@@ -644,7 +644,7 @@ export const SudokuSAT = ():ReactElement => {
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
       />
       <p>
-        Wait&mdash; that output <code>511</code>!  The cause of this is actually fairly straightforward.  Our clause simply says that our cell must contain <i>at least</i> one of the nine possible values not <i>exactly</i> one of the nine possible values.  The only one of the <TwoToTheNine /> possible solutions we've eliminated is the solution where all nine values are false.
+        Wait&mdash; that output 511!  The cause of this is actually fairly straightforward.  Our clause simply says that our cell must contain <i>at least</i> one of the nine possible values not <i>exactly</i> one of the nine possible values.  The only one of the <TwoToTheNine /> possible solutions we've eliminated is the solution where all nine values are false.
       </p>
       <p>
         Let's get rid of our extra solutions.  A clause like <code>[-1, -2]</code> means that either <X_1 /> or <X_2 /> must be <code>false</code>.  This can also be read as saying <X_1 /> and <X_2 /> cannot both be true, which is exactly what we're looking for!
@@ -674,7 +674,7 @@ export const SudokuSAT = ():ReactElement => {
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${firstCellClauses}` }
       />
       <p>
-        Running this query should show <code>81</code> solutions.  This makes sense as our each of our cells can store 9 independent values and <code>9 * 9 === 81</code>.
+        Running this query should show 81 solutions.  This makes sense as our each of our cells can store 9 independent values and <code>9 * 9 === 81</code>.
       </p>
       <p>
         However, our two cells <i>shouldn't</i> necessarily be independent.  We haven't yet assigned any notion of position to our cells.  This made sense when we only had one cell, as there was nothing for our cell's position to be relative to.  In Sudoku, a cells position is incredibly important.  From now on, I will consider the first cell to start at the top left corner and the next to follow it to the right.
@@ -714,7 +714,7 @@ export const SudokuSAT = ():ReactElement => {
       </p>
       <CodeRegion
         code={ genClause2 }
-        codeHeight='29em'
+        codeHeight='27.5em'
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
       />
       <p>
@@ -735,6 +735,9 @@ export const SudokuSAT = ():ReactElement => {
         Even with these new helpers our <code>sudokuClauses</code> function has gotten much more complex.  The most important change is that we now iterate over an array of cells.  Right now our array of cells has only two entries, but this will work the same when all 81 cells are present.  We also have a check to make sure cells in the same row don't share a value.  Later this will need to be expanded to also check if cells are in the same column or region as well.
       </p>
       <p>
+        One more, minor change we've made is to <code>sudokuClauses</code>' return value.  <code>sudokuClauses</code> now returns a tuple of <code>[numberOfValues, clauses]</code> instead of just returning the clauses.  This is done because the number of values depends on the number of cells (and digits per cell, but this value won't be changing).  The number of cells can be considered an implementation detail of <code>sudokuClauses</code>; with this change the caller doesn't need to be aware of it.
+      </p>
+      <p>
         This is basically all of the groundwork for generating clauses for all 81 cells.  Before we get to that, let's check out an important part of Sudoku we haven't touched on as of yet.
       </p>
 
@@ -746,7 +749,7 @@ export const SudokuSAT = ():ReactElement => {
         How can we represent given cells as CNF clauses?  This is actually fairly trivial.  Setting the required literal to true is all that's required.
       </p>
       <p>
-        We can modify `sudokuClauses` to take a list of given cells as an argument.  We'll represent the given cells as a tuple of <code>[cell, digit]</code> (JavaScript doesn't really have proper tuple support, a subarray will do).  This means, for instance, that passing in <code>[[47, 3], [50, 7]]</code> will state that cell 47 must contain 3 and cell 50 must contain 7.
+        We can modify <code>sudokuClauses</code> to take a list of given cells as an argument.  We'll represent the given cells as a tuple of <code>[cell, digit]</code> (JavaScript doesn't really have proper tuple support, a subarray will do).  This means, for instance, that passing in <code>[[47, 3], [50, 7]]</code> will state that cell 47 must contain 3 and cell 50 must contain 7.
       </p>
       <CodeRegion
         code={ givenCells }
@@ -755,42 +758,6 @@ export const SudokuSAT = ():ReactElement => {
       />
       <p>
         You can see that with these changes we're able to test some of our assumptions.  For instance, with <code>oneCellSet</code> in the above example we set cell 1 to 4.  This SAT Solver finds 8 possible solutions as we would expect (corresponding to cell 0 being equal to 1, 2, 3, 5, 6, 7, 8, and 9).  In the other cases we see that setting both cells to valid digits gives us exactly one solution and the two invalid puzzles have 0 solutions.  When we pass an empty array we get the same 72 solutions as before we accounted for given cells.
-      </p>
-
-      <h3>Unique solvability</h3>
-      <p>
-        This will be the last diversion before putting the final solver together.  A proper sudoku puzzle is "uniquely solvable."  This means that not only can the puzzle be solved, but that it has exactly one valid solution.  My original motivation for setting out to build a sudoku solver was actually to build a checker to make sure puzzles made in a Sudoku builder I was working on were uniquely solvable.  I decided to learn about SAT Solvers towards that end and in the process became fascinated by them.
-      </p>
-      <p>
-        Aside from my bias, I wanted to introduce the topic of unique solvability before adding more cells to our board as the solution space will explode.  A single empty row has <code>9! === 362880</code> possible solutions.  While we lose some information when we change from counting solutions to simply checking for unique solvability, this change can be helpful for sparse, larger boards.
-      </p>
-      <p>
-        Fortunately, implementing a unique solvability check is pretty simple.  Let's start by examining the <code>countSolutions</code> function written in the previous post
-      </p>
-      <strong>
-        TODO link to post above!
-      </strong>
-      <CodeRegion
-        code={ countSolutions }
-        codeHeight='24em'
-        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}` }
-      />
-      <p>
-        The function takes an optional parameter <code>loopLimit</code>.  While the mean reason for <code>loopLimit</code> was to avoid massive search spaces melting your computer, it can also be used to make sure we only have one valid solution.
-      </p>
-      <CodeRegion
-        code={ uniqSolv1 }
-        codeHeight='36em'
-        hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${sudokuClausesTwoCell}` }
-      />
-      <p>
-        Because we're passing in a <code>loopLimit</code> of 2, if we find 2 or more solutions we return -1.
-      </p>
-      <p>
-        <code>isUniquelySolvable</code> returns a tuple of whether the funciton is uniquely solvable and a reason.  This is helpfull because it often might be important to understand if a puzzle is not uniquely solvable because it has no solutions or many solutions.  Unfortunately, this is very cumbersome in JavaScript.  In TypeScript this would be much more ergonomic&mdash; an enum would make this clean and understandable.  More importantly, using the result wouldn't require destructuring the array.  We could use an integer to represent the return value as TypeScript does under the hood, however without a typechecker this is far too error prone to be a reasonable approach.
-      </p>
-      <p>
-        Regardless, with this minor excursion out of the way we can move on to implementing the rest of the board
       </p>
 
       <h3>The rest of the board</h3>
@@ -865,7 +832,7 @@ export const SudokuSAT = ():ReactElement => {
       <CodeRegion
         code={ formatting3 }
         hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}${cellsCollide}${sudokuClauses}${extract}` }
-        codeHeight='20em'
+        codeHeight='20.5em'
       />
       <p>
         Although printing the solution in the shape of a board will probably be easier for humans to understand.
