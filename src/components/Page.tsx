@@ -10,7 +10,7 @@ interface Props {
 export const Page = (props: Props): ReactElement =>
   <div id='page'>
     { props.sidebar && <props.sidebar /> }
-    <div id='main-content' className={ props.sidebar && 'with-sidebar' }>
+    <main id='main-content' className={ props.sidebar && 'with-sidebar' }>
       { props.children }
-    </div>
+    </main>
   </div>;
