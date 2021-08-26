@@ -17,6 +17,8 @@ import X_1TOX_9 from '../../res/sat-post/x_1-to-x_9.tex';
 import X_10TOX_18 from '../../res/sat-post/x_10-to-x_18.tex';
 import TwoToTheNine from '../../res/sat-post/TwoToTheNine.tex';
 
+import CellIds from '../../res/sat-post/cell-ids.png';
+import Puzzle from '../../res/sat-post/puzzle.png';
 
 const firstCellClauses = `const firstCellClauses = [
   [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -604,11 +606,9 @@ export const SudokuSAT = ():ReactElement => {
             Running this query should show 81 solutions.  This makes sense as our each of our cells can store 9 independent values and <code>9 * 9 === 81</code>.
           </p>
           <p>
-            However, our two cells <i>shouldn't</i> necessarily be independent.  We haven't yet assigned any notion of position to our cells.  This made sense when we only had one cell, as there was nothing for our cell's position to be relative to.  In Sudoku, a cells position is incredibly important.  From now on, I will consider the first cell to start at the top left corner and the next to follow it to the right.
+            However, our two cells <i>shouldn't</i> necessarily be independent.  We haven't yet assigned any notion of position to our cells.  This made sense when we only had one cell, as there was nothing for our cell's position to be relative to.  In Sudoku, a cells position is incredibly important.  From now on, I will consider the first cell to start at the top left corner and the next to follow it to the right.  The image below might help explain how a cell's id corresponds to its position:
           </p>
-          <p>
-            <strong>TODO DIAGRAM MAYBE?</strong>
-          </p>
+          <img src={ CellIds } alt="Diagram describing how cell ids are laid out" />
           <p>
             If our two cells are adjacent (which by all means they ought to be), they should not be able to contain the same values.  We can remove equal values as possible solutions with the following clauses:
           </p>
@@ -730,7 +730,7 @@ export const SudokuSAT = ():ReactElement => {
           <p>
             With this set up, we can give our solver its first board to solve.
           </p>
-          <strong> TODO board image here </strong>
+          <img src={ Puzzle } alt="Example sudoku puzzle" />
           <p>
             All we need to do is encode our board in the constant <code>board</code> bellow and everything else is already taken care of.
           </p>
