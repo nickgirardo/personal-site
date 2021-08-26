@@ -20,6 +20,8 @@ import TwoToTheNine from '../../res/sat-post/TwoToTheNine.tex';
 import CellIds from '../../res/sat-post/cell-ids.png';
 import Puzzle from '../../res/sat-post/puzzle.png';
 
+import '../../styles/_article.scss';
+
 const firstCellClauses = `const firstCellClauses = [
   [1, 2, 3, 4, 5, 6, 7, 8, 9],
   // All of the possible pairs to eliminate
