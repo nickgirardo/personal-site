@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+import { Helmet } from 'react-helmet-async';
+
 import { Page } from '../../components/Page';
 import { DefaultSidebar } from '../../components/Sidebar';
 import { CodeRegion } from '../../components/CodeRegion';
@@ -534,6 +536,14 @@ for (const row of [0, 1, 2, 3, 4, 5, 6, 7, 8])
 export const SudokuSAT = ():ReactElement => {
   return (
     <Page sidebar={ DefaultSidebar }>
+      <Helmet>
+        <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
+        <meta name='description' content='A Sudoku solver is constructed as a practical example of solving problems with SAT solvers.' />
+        { /* TODO fix date here */ }
+        <meta name='created' content='2021-08-28' />
+        <meta name='id' content='3bbb20b5-f2fb-4e4f-96a8-10d8e17d1fee' />
+      </Helmet>
+
       <article>
         <h2>Practical Introduction to SAT Solvers: Sudoku Solver</h2>
         <section>
