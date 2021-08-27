@@ -30,6 +30,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.png$/i,
+        use: 'file-loader',
+      },
+      {
         test: /\.raw$/i,
         use: 'raw-loader',
       },
