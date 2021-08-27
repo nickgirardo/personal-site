@@ -2,7 +2,7 @@ import { ReactNode, ReactElement } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import '../styles/_sidebar.scss';
+import '../styles/_header.scss';
 
 interface Props {
   children?: ReactNode,
@@ -15,13 +15,13 @@ const DefaultItems = () =>
     <Link to='/blog'>Blog</Link>
   </>
 
-export const Sidebar = (props: Props): ReactElement =>
-  <div id='sidebar'>
-    <div id='sidebar-name'>Nick Girardo</div>
-    <div id='sidebar-items'>
+export const Header = (props: Props): ReactElement =>
+  <div id='header'>
+    <div id='header-name'>Nick Girardo</div>
+    <div id='header-items'>
       { props.children }
     </div>
   </div>;
 
-export const DefaultSidebar = (): ReactElement =>
-  <Sidebar><DefaultItems /></Sidebar>;
+export const DefaultHeader = (): ReactElement =>
+  <Header><DefaultItems /></Header>;

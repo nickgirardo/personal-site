@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { Page } from '../../components/Page';
-import { DefaultSidebar } from '../../components/Sidebar';
+import { DefaultHeader } from '../../components/Header';
 import { CodeRegion } from '../../components/CodeRegion';
 import { EquationBlock } from '../../components/EquationBlock';
 
@@ -129,7 +129,7 @@ console.log(countSolutions(3, clauses));`;
 
 export const SATPost = ():ReactElement => {
   return (
-    <Page sidebar={ DefaultSidebar }>
+    <Page header={ DefaultHeader }>
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='Exploration of the basics of SAT solvers' />
@@ -139,7 +139,7 @@ export const SATPost = ():ReactElement => {
       </Helmet>
 
       <article>
-        <h2>Practical Introduction to SAT Solvers: Groundwork</h2>
+        <h2>Practical SAT Solvers: Groundwork</h2>
         <section>
           <p>
             SAT Solvers are computer programs which solve the boolean satisfiability problem.  The boolean satisfiability problem is the problem of determining if a given boolean formula has solutions.  For instance, the formula <code>x || !y</code> is satisfiable (or SAT in academic parlance).  It will be satisfied if <code>x</code> is <code>true</code> or if <code>y</code> is <code>false</code>. The formula <code>x && !x</code> is usatisfiable (or UNSAT in academic parlance).
@@ -308,8 +308,7 @@ export const SATPost = ():ReactElement => {
           </p>
         </section>
       </article>
-      { /* TODO remove */ }
-      <div style={{'height': '120em'}} />
+      { /* TODO footer */ }
     </Page>
   );
 };

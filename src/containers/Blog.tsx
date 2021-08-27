@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { Page } from '../components/Page';
 import { DefaultSidebar } from '../components/Sidebar';
 
-export const Test = ():ReactElement =>
+export const Blog = ():ReactElement =>
   <Page sidebar={ DefaultSidebar }>
-    <h2>Test content</h2>
+    <h2>Blog</h2>
     <ul>
       <li>
-        <Link to='/blog/sat-solvers-groundwork.html'>Practical Introduction to SAT Solvers: Groundwork</Link>
+        <Link to='/blog/sat-solvers-groundwork.html'>Practical SAT Solvers: Groundwork</Link>
       </li>
       <li>
-        <Link to='/blog/sat-solvers-sudoku.html'>Practical Introduction to SAT Solvers: Sudoku</Link>
+        <Link to='/blog/sat-solvers-sudoku.html'>Practical SAT Solvers: Sudoku</Link>
       </li>
     </ul>
   </Page>;

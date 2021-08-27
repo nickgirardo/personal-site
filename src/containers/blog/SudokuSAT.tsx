@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { Page } from '../../components/Page';
-import { DefaultSidebar } from '../../components/Sidebar';
+import { DefaultHeader } from '../../components/Header';
 import { CodeRegion } from '../../components/CodeRegion';
 
 import BooleanSat from '../../res/sat-post/boolean-sat.js.raw';
@@ -535,7 +535,7 @@ for (const row of [0, 1, 2, 3, 4, 5, 6, 7, 8])
 
 export const SudokuSAT = ():ReactElement => {
   return (
-    <Page sidebar={ DefaultSidebar }>
+    <Page header={ DefaultHeader }>
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='A Sudoku solver is constructed as a practical example of solving problems with SAT solvers.' />
@@ -545,7 +545,7 @@ export const SudokuSAT = ():ReactElement => {
       </Helmet>
 
       <article>
-        <h2>Practical Introduction to SAT Solvers: Sudoku Solver</h2>
+        <h2>Practical SAT Solvers: Sudoku Solver</h2>
         <section>
           <p>
             This post is a follow up to a previous post in which the basic functioning of a SAT Solver was explored. This post will demonstrate applying a SAT Solver to a basic example problem: solving a Sudoku puzzle.  If you understand the basics of how SAT Solvers work you might not need to read the prior post, but in it several helper functions were described which will be used here.  You can see them bellow:
@@ -791,8 +791,7 @@ export const SudokuSAT = ():ReactElement => {
           />
         </section>
       </article>
-      { /* TODO remove */ }
-      <div style={{'height': '20em'}} />
+      { /* TODO footer */ }
     </Page>
   );
 };

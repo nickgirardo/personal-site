@@ -1,7 +1,10 @@
 @import '_variables.scss';
 
 .code-region {
-  width: 80ch;
+  width: $article-width-sm;
+  @media (min-width: 1200px) {
+    width: $article-width-lg;
+  }
 
   background-color: hsl(195, 20%, 98%);
   .control-row {

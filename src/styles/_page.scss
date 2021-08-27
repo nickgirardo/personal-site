@@ -4,4 +4,9 @@
   &.with-sidebar {
     margin-left: $sidebar-width;
   }
+  &.no-sidebar {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 2em;
+  }
 }

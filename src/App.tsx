@@ -10,7 +10,7 @@ import {
 import { Route } from './components/Route';
 
 import { About } from './containers/About';
-import { Test } from './containers/Test';
+import { Blog } from './containers/Blog';
 import { Home } from './containers/Home';
 
 const SATPost = loadable(() => import('./containers/blog/SATPost'), {
@@ -25,21 +25,22 @@ const App = (): ReactElement => (
   <div className="app">
     <Router>
       <Switch>
-        <Route path='/about' title='About'><About /></Route>
-        <Route path='/test' title='Test'><Test /></Route>
         { /* Blog posts */ }
         <Route
           path='/blog/sat-solvers-groundwork.html'
-          title='Introduction to SAT Solvers: Groundwork'
+          title='Practical SAT Solvers: Groundwork'
         >
           <SATPost />
         </Route>
         <Route
           path='/blog/sat-solvers-sudoku.html'
-          title='Introduction to SAT Solvers: Sudoku Solver'
+          title='Practical SAT Solvers: Sudoku Solver'
         >
           <SudokuSAT />
         </Route>
+        { /* Main sections */ }
+        <Route path='/about' title='About'><About /></Route>
+        <Route path='/blog' title='Blog'><Blog /></Route>
         { /* Home */ }
         <Route path='/' title='Home'><Home /></Route>
       </Switch>
