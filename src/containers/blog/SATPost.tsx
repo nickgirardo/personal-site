@@ -2,8 +2,8 @@ import { ReactElement } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 
-import { Page } from '../../components/Page';
-import { DefaultHeader } from '../../components/Header';
+import { Page, BodyType } from '../../components/Page';
+import { DefaultItems, NavigationType } from '../../components/Navigation';
 import { CodeRegion } from '../../components/CodeRegion';
 import { EquationBlock } from '../../components/EquationBlock';
 
@@ -129,7 +129,11 @@ console.log(countSolutions(3, clauses));`;
 
 export const SATPost = ():ReactElement => {
   return (
-    <Page header={ DefaultHeader }>
+    <Page
+      navItems={ DefaultItems }
+      navType={ NavigationType.Header }
+      bodyType={ BodyType.Article }
+    >
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='Exploration of the basics of SAT solvers' />

@@ -2,7 +2,7 @@
 
 .code-region {
   width: $article-width-sm;
-  @media (min-width: 1200px) {
+  @media (min-width: $laptop-size) {
     width: $article-width-lg;
   }
 
