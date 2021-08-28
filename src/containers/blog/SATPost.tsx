@@ -6,6 +6,7 @@ import { Page, BodyType } from '../../components/Page';
 import { DefaultItems, NavigationType } from '../../components/Navigation';
 import { CodeRegion } from '../../components/CodeRegion';
 import { EquationBlock } from '../../components/EquationBlock';
+import { ScreenSizeWarning } from '../../components/ScreenSizeWarning';
 
 import BooleanSat from '../../res/sat-post/boolean-sat.js.raw';
 import solutionAsClause from '../../res/sat-post/solutionAsClause.js.raw';
@@ -143,6 +144,9 @@ export const SATPost = ():ReactElement => {
       </Helmet>
 
       <article>
+        <ScreenSizeWarning>
+          Heads up: some of the interactive code elements on this page are not well suited to small screens.
+        </ScreenSizeWarning>
         <h2>Practical SAT Solvers: Groundwork</h2>
         <section>
           <p>

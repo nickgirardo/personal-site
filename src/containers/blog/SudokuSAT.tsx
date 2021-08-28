@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Page, BodyType } from '../../components/Page';
 import { DefaultItems, NavigationType } from '../../components/Navigation';
 import { CodeRegion } from '../../components/CodeRegion';
+import { ScreenSizeWarning } from '../../components/ScreenSizeWarning';
 
 import BooleanSat from '../../res/sat-post/boolean-sat.js.raw';
 import solutionAsClause from '../../res/sat-post/solutionAsClause.js.raw';
@@ -549,6 +550,9 @@ export const SudokuSAT = ():ReactElement => {
       </Helmet>
 
       <article>
+        <ScreenSizeWarning>
+          Heads up: some of the interactive code elements on this page are not well suited to small screens.
+        </ScreenSizeWarning>
         <h2>Practical SAT Solvers: Sudoku Solver</h2>
         <section>
           <p>
