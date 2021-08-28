@@ -13,5 +13,14 @@ article {
     display: block;
     margin: 0 auto;
     max-width: 75vw;
+
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(95%);
+      transition: filter 0.25s ease;
+
+      &:hover {
+        filter: brightness(100%);
+      }
+    }
   }
 }
