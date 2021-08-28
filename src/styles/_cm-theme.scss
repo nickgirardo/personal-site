@@ -86,6 +86,7 @@ $border-std: $code-border-std;
     border: $border-std;
     border-radius: 2px;
 
+    span,
     span.CodeMirror-matchingbracket {
       color: #222;
     }
