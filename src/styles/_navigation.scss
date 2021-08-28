@@ -9,6 +9,7 @@
     width: $sidebar-inner-width;
 
     .navigation-name {
+      color: var(--color-text);
       font-size: $name-size;
       font-weight: $name-weight;
       text-align: right;
@@ -26,6 +27,7 @@
     margin: 0 1em;
 
     .navigation-name {
+      color: var(--color-text);
       font-size: $name-size;
       font-weight: $name-weight;
     }

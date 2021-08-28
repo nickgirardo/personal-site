@@ -11,7 +11,19 @@ $tablet-size: 768px;
 $laptop-size: 1200px;
 
 // COLORS
-$color-black: hsl(195, 60%, 4%);
+// For light mode
+$color-lm-white: hsl(35, 45%, 97%);
+$color-lm-black: hsl(195, 60%, 4%);
+$color-lm-link: #0000EE;
+$color-lm-link-active: #0095FF;
+$color-lm-code-bg: hsl(35, 35%, 88%);
+
+// For dark mode
+$color-dm-white: hsl(195, 20%, 92%);
+$color-dm-black: hsl(195, 60%, 4%);
+$color-dm-link: hsl(25, 72%, 47%);
+$color-dm-link-active: hsl(25, 78%, 58%);
+$color-dm-code-bg: hsl(195, 48%, 12%);
 
 // CODE DISPLAY
 $code-border-std: 1px solid #888;

@@ -1,3 +1,21 @@
+@import './variables';
+
+:root {
+  --color-main-bg: #{$color-lm-white};
+  --color-text: #{$color-lm-black};
+  --color-link: #{$color-lm-link};
+  --color-link-active: #{$color-lm-link-active};
+  --color-code-bg: #{$color-lm-code-bg};
+
+  @media (prefers-color-scheme: dark) {
+    --color-main-bg: #{$color-dm-black};
+    --color-text: #{$color-dm-white};
+    --color-link: #{$color-dm-link};
+    --color-link-active: #{$color-dm-link-active};
+    --color-code-bg: #{$color-dm-code-bg};
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,21 +23,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--color-main-bg);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-  background-color: hsl(195, 20%, 92%);
+  background-color: var(--color-code-bg);
+  // This is subtle, but without it the code text touches the ends of its box
+  // This helps the code not feel so cramped
+  padding: 0 1px;
 }
 
 a {
   &:link,
   &:visited {
-    color: #0000EE;
+    color: var(--color-link);
   }
   &:link:active,
   &:visited:active {
-    color: #0095FF;
+    color: var(--color-link-active);
   }
 }
+
+p,
+span,
+h2,
+h3 {
+  color: var(--color-text);
+}
+

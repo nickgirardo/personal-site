@@ -16,6 +16,11 @@ $border-std: $code-border-std;
     background: #cfc;
   }
 
+  // Fallback for general "uncolored" text
+  span {
+    color: #7b7c7d;
+  }
+
   // Matching brackets
   span.CodeMirror-matchingbracket {
     outline:1px solid grey;
