@@ -9,5 +9,7 @@ export const Home = ():ReactElement =>
     navType={ NavigationType.Responsive }
     bodyType={ BodyType.SidebarResponsive }
   >
-    Home
+    <p>
+      Home
+    </p>
   </Page>;

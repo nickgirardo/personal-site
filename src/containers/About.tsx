@@ -9,5 +9,7 @@ export const About = ():ReactElement =>
     navType={ NavigationType.Responsive }
     bodyType={ BodyType.SidebarResponsive }
   >
-    All about me here
+    <p>
+      All about me here
+    </p>
   </Page>;
