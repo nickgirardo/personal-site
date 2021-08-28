@@ -794,6 +794,13 @@ export const SudokuSAT = ():ReactElement => {
             codeHeight='23em'
           />
         </section>
+        { /* TODO fix date */ }
+        { /* TODO is there a specific date element? */ }
+        <footer>
+          <span>
+            Posted by Nick Girardo on 2021-08-28
+          </span>
+        </footer>
       </article>
       { /* TODO footer */ }
     </Page>

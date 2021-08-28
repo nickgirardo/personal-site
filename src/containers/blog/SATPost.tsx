@@ -311,8 +311,15 @@ export const SATPost = ():ReactElement => {
             This function also needs to take the number of literals in the formula as an argument so it can pass it to <code>satSolve()</code>.  Check out what happens when you increase this value without changing the clauses at all.  Is the behavior what you expected?  Counting the number of solutions is sort of adjacent to the real problems SAT Solvers can help with, but being able to count functions can help reinforce our understanding of these problems.
           </p>
         </section>
+
+        { /* TODO fix date */ }
+        { /* TODO is there a specific date element? */ }
+        <footer>
+          <span>
+            Posted by Nick Girardo on 2021-08-28
+          </span>
+        </footer>
       </article>
-      { /* TODO footer */ }
     </Page>
   );
 };
