@@ -2,6 +2,8 @@ import { ReactElement } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 
+import { dateToString } from '../../util';
+
 import { Page, BodyType } from '../../components/Page';
 import { DefaultItems, NavigationType } from '../../components/Navigation';
 import { CodeRegion } from '../../components/CodeRegion';
@@ -129,6 +131,9 @@ const clauses = [
 console.log(countSolutions(3, clauses));`;
 
 export const SATPost = ():ReactElement => {
+  // Publish date as ISO8601 formatted string
+  const pubDate = '2021-08-28T04:00:00.000Z';
+
   return (
     <Page
       navItems={ DefaultItems }
@@ -139,7 +144,7 @@ export const SATPost = ():ReactElement => {
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='Exploration of the basics of SAT solvers' />
         { /* TODO fix date here */ }
-        <meta name='created' content='2021-08-28' />
+        <meta name='created' content={ pubDate } />
         <meta name='id' content='11c988d0-e0aa-4925-89c6-710f94d0132c' />
       </Helmet>
 
@@ -320,7 +325,7 @@ export const SATPost = ():ReactElement => {
         <footer>
           <span>
             Posted by Nick Girardo on&nbsp;
-            <time dateTime='2021-08-28'>August 28, 2021</time>
+            <time dateTime={ pubDate }>{ dateToString(pubDate) }</time>
           </span>
         </footer>
       </article>
