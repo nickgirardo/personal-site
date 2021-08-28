@@ -743,10 +743,10 @@ export const SudokuSAT = ():ReactElement => {
           />
         </section>
         { /* TODO fix date */ }
-        { /* TODO is there a specific date element? */ }
         <footer>
           <span>
-            Posted by Nick Girardo on 2021-08-28
+            Posted by Nick Girardo on&nbsp;
+            <time dateTime='2021-08-28'>August 28, 2021</time>
           </span>
         </footer>
       </article>
