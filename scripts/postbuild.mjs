@@ -9,7 +9,14 @@ const blogDir = './build/blog/';
 // Run react-snap here
 // Traverses our pages and outputs as HTML
 // This must happen before building our rss as the rss depends on these files
-await runSnap();
+// Options: viewport defaults to mobile, pc form factor is more my target
+const snapOptions = {
+  viewport: {
+    width: 1440,
+    height: 900,
+  },
+};
+await runSnap(snapOptions);
 
 // Build our rss feed here
 const feed = await makeFeed(blogDir);
