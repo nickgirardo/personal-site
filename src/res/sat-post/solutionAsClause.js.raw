@@ -1,0 +1,10 @@
+function solutionAsClause(solution) {
+  // The first element is always null (because 0 cannot be negated)
+  // We can safely ignore it
+  const relevant = solution.slice(1);
+
+  // Since we sliced off the first element we must add one to the index
+  // If v is false, return the the index (plus one)
+  // If v is false, return the negation of the index (plus one)
+  return relevant.map((b, ix) => b ? (ix + 1) : -(ix + 1));
+}

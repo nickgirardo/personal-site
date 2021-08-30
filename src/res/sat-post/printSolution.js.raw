@@ -1,0 +1,7 @@
+function printSolution(solution) {
+  if (!solution) {
+    console.log('No solutions :(');
+  } else {
+    console.log('Solution found!', solutionAsClause(solution));
+  }
+}

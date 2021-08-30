@@ -1,0 +1,26 @@
+@import '_variables.scss';
+
+article {
+  // Min has to be capitalized here
+  // If it were lowercased scss would think it's the scss fn not the css fn
+  max-width: Min($article-width-sm, calc(100vw - 2em));
+  @media (min-width: 1200px) {
+    max-width: $article-width-lg;
+  }
+
+  // Center images
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 75vw;
+
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(95%);
+      transition: filter 0.25s ease;
+
+      &:hover {
+        filter: brightness(100%);
+      }
+    }
+  }
+}

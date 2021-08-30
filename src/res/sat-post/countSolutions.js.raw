@@ -1,0 +1,17 @@
+function countSolutions(values, clauses, loopLimit = 2**12) {
+  let numSolutions = 0;
+  while (numSolutions < loopLimit) {
+    const solution = satSolve(values, clauses);
+    if (!solution)
+      return numSolutions;
+
+    const newClause = negateClause(solutionAsClause(solution));
+    clauses.push(newClause);
+
+    numSolutions++;
+  }
+
+  // Error, too many solutions
+  // For now we'll just return -1 in this case
+  return -1;
+}

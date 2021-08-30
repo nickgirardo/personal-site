@@ -1,0 +1,36 @@
+@import '_variables.scss';
+
+.code-region {
+  width: $article-width-sm;
+  @media (min-width: $laptop-size) {
+    width: $article-width-lg;
+  }
+
+  background-color: hsl(195, 20%, 98%);
+  .control-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+
+    .controls {
+      padding: 0 2em;
+
+      display: flex;
+      flex-direction: column;
+
+      >:not(:last-child) {
+        margin-bottom: 0.5em;
+      }
+    }
+
+    .output {
+      margin: 1em 1em 1em 0;
+      flex-grow: 1;
+    }
+  }
+
+  border: $code-border-std;
+  border-radius: 3px;
+  overflow: hidden;
+}

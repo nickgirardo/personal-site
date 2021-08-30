@@ -1,6 +1,17 @@
+@import '_variables.scss';
 
 #main-content {
-  &.with-sidebar {
-    margin-left: $sidebar-width;
+  &.sidebar-responsive {
+    @media (min-width: $tablet-size) {
+      margin-left: $sidebar-width;
+    }
+    @media (max-width: $tablet-size - 1px) {
+      margin: 0 2em;
+    }
+  }
+  &.article {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 2em;
   }
 }

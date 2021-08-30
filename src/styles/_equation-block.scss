@@ -1,0 +1,15 @@
+.equation-block {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+
+  > svg {
+    overflow: visible;
+    min-width: 1px;
+    min-height: 1px;
+
+    * {
+      fill: var(--color-text);
+    }
+  }
+}

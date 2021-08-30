@@ -1,0 +1,15 @@
+@import '_variables.scss';
+
+.screen-size-warning {
+  // Don't show these warnings to users with large enough screens
+  @media (min-width: $tablet-size) {
+    display: none;
+  }
+
+  margin-top: 1em;
+  padding: 0.5em 1em;
+
+  color: var(--color-text);
+  background-color: var(--color-code-bg);
+}
+

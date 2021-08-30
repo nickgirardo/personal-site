@@ -1,0 +1,54 @@
+@import './variables';
+
+:root {
+  --color-main-bg: #{$color-lm-white};
+  --color-text: #{$color-lm-black};
+  --color-link: #{$color-lm-link};
+  --color-link-active: #{$color-lm-link-active};
+  --color-code-bg: #{$color-lm-code-bg};
+
+  @media (prefers-color-scheme: dark) {
+    --color-main-bg: #{$color-dm-black};
+    --color-text: #{$color-dm-white};
+    --color-link: #{$color-dm-link};
+    --color-link-active: #{$color-dm-link-active};
+    --color-code-bg: #{$color-dm-code-bg};
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: var(--color-text);
+  background-color: var(--color-main-bg);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  background-color: var(--color-code-bg);
+  // This is subtle, but without it the code text touches the ends of its box
+  // This helps the code not feel so cramped
+  padding: 0 1px;
+}
+
+a {
+  &:link,
+  &:visited {
+    color: var(--color-link);
+  }
+  &:link:active,
+  &:visited:active {
+    color: var(--color-link-active);
+  }
+}
+
+footer {
+  margin-bottom: 2em;
+  font-size: 13px;
+}
