@@ -747,7 +747,23 @@ export const SudokuSAT = ():ReactElement => {
             codeHeight='23em'
           />
         </section>
-        { /* TODO fix date */ }
+
+        <section>
+          <h3>Conclusion</h3>
+          <p>
+            While we have implemented only standard variant of Sudoku here, changing our <code>sameRegion</code> function is all that would be needed to implement a Jigsaw Sudoku solver.  Likewise, the board size and digits per region can be parameterized as well to solve for larger or smaller boards.  Without changing the <code>sudokuClauses</code> function at all, the solver can instead function as a tool for determining if a Sudoku puzzle is "uniquely solvable."  All proper Sudoku puzzles should be uniquely solvable, meaning there is only one valid solution (this was actually the problem I set out to solve originally).
+          </p>
+          <p>
+            The Sudoku solver we've built here is by no means groundbreaking; it was never meant to be.  However, I hope that through reading along you've learned not just how to build a bog standard Sudoku solver, but also how to think about problems in terms of constraints.  We did not build the solver with an procedural mindset, for at no point did we consider how the actual program would be executed.  Instead, our goal was describing (in a format our SAT solver could understand) what it meant for a Sudoku puzzle to be solved.  This constraint-based and declarative approach is not just a different way of solving problems, but a different way of thinking about problems.
+          </p>
+          <p>
+            While limiting ourselves to only boolean values here might have made this feel alien and impractical, declarative programming doesn't have to be as limited as we've seen here.  A similar program could instead be written in&mdash; for instance&mdash; Prolog and have similar logic with less aesctic syntax.  One of the most popular and effective programing languages ever created, SQL, is a declarative programming language.  In SQL, a programmer's task is to form queries and let the database take care of returning or mutating the data.  At it's core this is similar to how we concerned ourselves with only the creation of the necessary clauses here and trusted our SAT solver to take care of the execution.  One can even consider specifying a webpage's layout in CSS an exercise in declarative programming.
+          </p>
+          <p>
+            Why use a SAT solver then?  For this problem it is more or less recreational.  I find beauty in how absolutely minimal the tools at our disposal are, and I am amazed at how much is still possible with only these tools.  Beyond that, being forced to break problems down to it's atoms as we've done here gives an appreaciation for what declarative and constraint programming are at their core.
+          </p>
+        </section>
+
         <footer>
           <span>
             Posted by Nick Girardo on&nbsp;
