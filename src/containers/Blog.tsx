@@ -4,15 +4,27 @@ import { Page, BodyType } from '../components/Page';
 import { DefaultItems, NavigationType } from '../components/Navigation';
 import { BlogEntry } from '../components/BlogEntry';
 
-// TODO link rss feed
-export const Blog = ():ReactElement =>
+import RSS from '../res/rss.png';
+
+import '../styles/_blog.scss';
+
+const RSSLink = ():ReactElement => (
+  <a className='rss-link' href='/blog/feed.rss'>
+    <img src={ RSS } alt='RSS Icon' />
+  </a>
+);
+
+export const Blog = ():ReactElement => (
   <Page
     navItems={ DefaultItems }
     navType={ NavigationType.Responsive }
     bodyType={ BodyType.SidebarResponsive }
   >
     <div>
-      <h2>Blog</h2>
+      <div className='header-row'>
+        <RSSLink />&nbsp;
+        <h2>Blog</h2>
+      </div>
       <BlogEntry
         name='Practical SAT Solvers: Sudoku'
         link='/blog/sat-solvers-sudoku.html'
@@ -28,4 +40,5 @@ export const Blog = ():ReactElement =>
         An exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.
       </BlogEntry>
     </div>
-  </Page>;
+  </Page>
+);
