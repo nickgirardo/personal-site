@@ -69,9 +69,10 @@ export default async function makeFeed (blogDir) {
   // Get all of the files in the blog dir
   const dir = await getDir();
 
+  // TODO remove
+  console.log(dir, dir.map(name => !exclude.includes(name)));
   // Only interested in the html files
   // Filter out index.html as well
-  console.log(dir);
   const htmlFiles = dir
     .filter(name => !exclude.includes(name))
     .filter(name => name.endsWith('.html'));
