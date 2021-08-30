@@ -505,7 +505,7 @@ export const SudokuSAT = ():ReactElement => {
         <h2>Practical SAT Solvers: Sudoku Solver</h2>
         <section>
           <p>
-            This post is a follow up to a previous post in which the basic functioning of a SAT Solver was explored. This post will demonstrate applying a SAT Solver to a basic example problem: solving a Sudoku puzzle.  If you understand the basics of how SAT Solvers work, you might not need to read the prior post, but in it several helper functions were described which will be used here.  You can see them bellow:
+            This post is a follow up to a previous post in which the basic functioning of a SAT solver was explored. This post will demonstrate applying a SAT solver to a basic example problem: solving a Sudoku puzzle.  If you understand the basics of how SAT solvers work, you might not need to read the prior post, but in it several helper functions were described which will be used here.  You can see them bellow:
           </p>
           <CodeRegion
             code={ `${solutionAsClause}\n${printSolution}\n${negateClause}\n${countSolutions}` }
@@ -522,7 +522,7 @@ export const SudokuSAT = ():ReactElement => {
             Sudoku is a number placement puzzle.  In Sudoku, the player (or automated solver) attempts to place a digit from one to nine in every cell such that no two cells in a given row, column, or region share a value.  While there are many interesting variations on sudoku, for simplicity's sake we will only address the most basic ruleset.
           </p>
           <p>
-            For a Sudoku puzzle to be solveable by a SAT Solver, we need to express the Sudoku puzzle as a boolean expression in conjunctive normal form (CNF).  While we will eventually need to consider the entire board, to simplify this process we can start from a single cell and build our way up from there.
+            For a Sudoku puzzle to be solveable by a SAT solver, we need to express the Sudoku puzzle as a boolean expression in conjunctive normal form (CNF).  While we will eventually need to consider the entire board, to simplify this process we can start from a single cell and build our way up from there.
           </p>
         </section>
 
@@ -657,7 +657,7 @@ export const SudokuSAT = ():ReactElement => {
             hiddenPrelude={ `${BooleanSat}${solutionAsClause}${printSolution}${negateClause}${countSolutions}` }
           />
           <p>
-            With these changes we were able to test some of our assumptions.  For instance, with <code>oneCellSet</code> in the above example, we set cell 1 to 4.  This SAT Solver finds 8 possible solutions as we would expect (corresponding to cell 0 being equal to 1, 2, 3, 5, 6, 7, 8, and 9).  In the other cases, we see that setting both cells to valid digits gives us exactly one solution and the two invalid puzzles have 0 solutions.  When we pass an empty array, we get the same 72 solutions as before we accounted for given cells.
+            With these changes we were able to test some of our assumptions.  For instance, with <code>oneCellSet</code> in the above example, we set cell 1 to 4.  This SAT solver finds 8 possible solutions as we would expect (corresponding to cell 0 being equal to 1, 2, 3, 5, 6, 7, 8, and 9).  In the other cases, we see that setting both cells to valid digits gives us exactly one solution and the two invalid puzzles have 0 solutions.  When we pass an empty array, we get the same 72 solutions as before we accounted for given cells.
           </p>
         </section>
 
@@ -686,7 +686,7 @@ export const SudokuSAT = ():ReactElement => {
             codeHeight='7em'
           />
           <p>
-            The above line is a quick and easy way to build a range of numbers in JavaScript.  This is not the most performant way of building this range, but in this context any minor performance penalty is negligible.  The lack of a proper standard range method is something that constantly irks me.
+            The above line is a quick and easy way to build a range of numbers in JavaScript.  This is not the most performant way of building this range, but in this context any minor performance penalty is negligible.  The lack of a proper standard range method constantly irks me.
           </p>
           <p>
             These are the only minor changes required to our previous <code>sudokuClauses</code> function to handle full boards.  Here is the code in full:

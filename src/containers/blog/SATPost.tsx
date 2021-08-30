@@ -156,13 +156,13 @@ export const SATPost = ():ReactElement => {
         <h2>Practical SAT Solvers: Groundwork</h2>
         <section>
           <p>
-            SAT Solvers are computer programs which solve the boolean satisfiability problem.  The boolean satisfiability problem is the problem of determining if a given boolean formula has solutions.  For instance, the formula <code>x || !y</code> is satisfiable (or SAT in academic parlance).  It will be satisfied if <code>x</code> is <code>true</code> or if <code>y</code> is <code>false</code>. The formula <code>x && !x</code> is usatisfiable (or UNSAT in academic parlance).
+            SAT solvers are computer programs which solve the boolean satisfiability problem.  The boolean satisfiability problem is the problem of determining if a given boolean formula has solutions.  For instance, the formula <code>x || !y</code> is satisfiable (or SAT in academic parlance).  It will be satisfied if <code>x</code> is <code>true</code> or if <code>y</code> is <code>false</code>. The formula <code>x && !x</code> is usatisfiable (or UNSAT in academic parlance).
           </p>
           <p>
-            SAT Solvers are a kind of constraint solver.  This means that we give the solver a series of constraints (in this case the boolean formula) as input and it works to find a solution.  The inner workings of SAT Solvers are fascinating, but one doesn't need to know exactly how they work to make use of them.  In this post I will treat SAT Solvers like black boxes, taking their functioning for granted.  The specific SAT Solver used in this post is <a href="https://github.com/cemulate/SAT.js" target="_blank" rel="noopener noreferrer">SAT.js</a> (or boolean-sat on npm) as it is trivial to run it in the browser, but the ideas presented here should work for any SAT Solver.
+            SAT solvers are a kind of constraint solver.  This means that we give the solver a series of constraints (in this case the boolean formula) as input and it works to find a solution.  The inner workings of SAT solvers are fascinating, but one doesn't need to know exactly how they work to make use of them.  In this post I will treat SAT solvers like black boxes, taking their functioning for granted.  The specific SAT solver used in this post is <a href="https://github.com/cemulate/SAT.js" target="_blank" rel="noopener noreferrer">SAT.js</a> (or boolean-sat on npm) as it is trivial to run it in the browser, but the ideas presented here should work for any SAT solver.
           </p>
           <p>
-            Like other constraint solvers, SAT Solvers can enable dynamic programming.  Once a programmer describes their problem (in a form the solver can understand) the task of actually working through a solution is offloaded to the solver.  Dynamic programming's inversion of work from computing a solution to describing a problem can be incredibly liberating.  Some forms of dynamic programming can be found everywhere in computing.  SAT Solvers are specifically interesting to me because of how low level they are.  As will be demonstrated, SAT Solvers can answer complex questions which are composed of incredibly simple primitives.
+            Like other constraint solvers, SAT solvers can enable dynamic programming.  Once a programmer describes their problem (in a form the solver can understand) the task of actually working through a solution is offloaded to the solver.  Dynamic programming's inversion of work from computing a solution to describing a problem can be incredibly liberating.  Some forms of dynamic programming can be found everywhere in computing.  SAT solvers are specifically interesting to me because of how low level they are.  As will be demonstrated, SAT solvers can answer complex questions which are composed of incredibly simple primitives.
           </p>
           <p>
             Let's take our first look at a simple SAT problem:
@@ -193,7 +193,7 @@ export const SATPost = ():ReactElement => {
             Here <code>translated</code> is a function which takes in two boolean variables, much like how in the mathematical notation above we had two literals.  If <code>translated</code> returns <code>true</code>, the formula is considered satisfied. If instead <code>false</code> is returned, the formula is considered unsatisfied.  Note that a formula is unsatisfiable (UNSAT) if for all possible imputs the formula is unsatisfied.
           </p>
           <p>
-            This brings us back to SAT Solvers.  SAT Solvers find a combination of assignments to literals which satisfy given problems, or let us know that a problem is unsatisfiable.
+            This brings us back to SAT solvers.  SAT solvers find a combination of assignments to literals which satisfy given problems, or let us know that a problem is unsatisfiable.
           </p>
           <p>
             Consider the following problem:
@@ -240,10 +240,10 @@ export const SATPost = ():ReactElement => {
           <EquationBlock><CNF2 /></EquationBlock>
           <EquationBlock><CNF3 /></EquationBlock>
           <p>
-            Explaining how to convert formulas into CNF is outside of the scope of this post.  The important thing to understand is that while CNF is stylistically constraining and may take getting used to, using CNF doesn't actaully constrain what SAT Solvers can accomplish.
+            Explaining how to convert formulas into CNF is outside of the scope of this post.  The important thing to understand is that while CNF is stylistically constraining and may take getting used to, using CNF doesn't actaully constrain what SAT solvers can accomplish.
           </p>
           <p>
-            Once we have our formula in CNF, setting the SAT Solver up is easy.  Here is how the last formula of the above would be set up:
+            Once we have our formula in CNF, setting the SAT solver up is easy.  Here is how the last formula of the above would be set up:
           </p>
           <CodeRegion
             code={ code4 }
@@ -276,10 +276,10 @@ export const SATPost = ():ReactElement => {
         <section>
           <h3>Multiple satisfying solutions</h3>
           <p>
-            If you've run the above examples multiple times, you may have noticed the output is not always the same.  The boolean formulas we feed to the SAT Solver can (and very often will) have multiple valid solutions which satisfy it.
+            If you've run the above examples multiple times, you may have noticed the output is not always the same.  The boolean formulas we feed to the SAT solver can (and very often will) have multiple valid solutions which satisfy it.
           </p>
           <p>
-            To better aid our understanding of these problems, I will describe a way to count or display the multiple solutions.  Before doing so I wanted to give a quick disclaimer that this is not the most efficient way to go about this.  The following method involves solving the problem anew each time.  This means the solver will discard all of the valuable information it discovered during the previous run.  In this post I want to treat SAT Solvers as black boxes, but this could not go without saying.  Because our formulas are basically trivial compared to real-world formulas, performance will not be a concern here.  I will describe this process to help illustrate how to think about the clauses we feed to our solver.
+            To better aid our understanding of these problems, I will describe a way to count or display the multiple solutions.  Before doing so I wanted to give a quick disclaimer that this is not the most efficient way to go about this.  The following method involves solving the problem anew each time.  This means the solver will discard all of the valuable information it discovered during the previous run.  In this post I want to treat SAT solvers as black boxes, but this could not go without saying.  Because our formulas are basically trivial compared to real-world formulas, performance will not be a concern here.  I will describe this process to help illustrate how to think about the clauses we feed to our solver.
           </p>
           <p>
             With that out of the way, let's begin.  One way to count the solutions is just to run the solver multiple times and hope that a new solution is given:
@@ -318,33 +318,33 @@ export const SATPost = ():ReactElement => {
             Looks good to me!  Once we had figured out the general idea in the last example, all we needed to do was set up a loop.  It might be helpful to your understanding to add a <code>printSolution()</code> call to the loop.  You can note our solutions are unique and complete.
           </p>
           <p>
-            This function also needs to take the number of literals in the formula as an argument so it can pass it to <code>satSolve()</code>.  Check out what happens when you increase this value without changing the clauses at all.  Is the behavior what you expected?  Counting the number of solutions is sort of adjacent to the real problems SAT Solvers can help with, but being able to count functions can help reinforce our understanding of these problems.
+            This function also needs to take the number of literals in the formula as an argument so it can pass it to <code>satSolve()</code>.  Check out what happens when you increase this value without changing the clauses at all.  Is the behavior what you expected?  Counting the number of solutions is sort of adjacent to the real problems SAT solvers can help with, but being able to count functions can help reinforce our understanding of these problems.
           </p>
         </section>
 
         <section>
           <h3>A major caveat: Performance</h3>
           <p>
-            Now that you have a basic understanding of SAT Solvers, performance&mdash; the elephant in the room&mdash; must be addressed.
+            Now that you have a basic understanding of SAT solvers, performance&mdash; the elephant in the room&mdash; must be addressed.
           </p>
           <p>
             The boolean satisfiability problem, or SAT, belongs to a class of problems called NP-complete.  NP means "nondeterministic polynomial-time," which is to say that a solution cannot be found in polynomial time.  Complete means that SAT is at least as difficult as every other NP problem.  In the case of SAT, even the best known solvers take exponentially longer in the worst case as the given formula grows.
           </p>
           <p>
-            While this probably makes you a bit weary of SAT Solvers, there are many problems which are NP-complete and therefore require a tool similar to a SAT Solver.  Furthermore, SAT is <i>the</i> NP-complete problem.  Because of its simplicity and the importance of NP as a class of problems, many researchers have dedicated considerable effort to improving the state-of-the-art in SAT Solvers.  While worst-case exponential time is a barrier which may likely never be breached (doing so would prove P=NP), clever algorithms have pushed performance forward drastically in the past few decades.  However, SAT Solvers are very general tools.  A finely tuned solution will be able to best SAT Solvers every time.
+            While this probably makes you a bit weary of SAT solvers, there are many problems which are NP-complete and therefore require a tool similar to a SAT solver.  Furthermore, SAT is <i>the</i> NP-complete problem.  Because of its simplicity and the importance of NP as a class of problems, many researchers have dedicated considerable effort to improving the state-of-the-art in SAT solvers.  While worst-case exponential time is a barrier which may likely never be breached (doing so would prove P=NP), clever algorithms have pushed performance forward drastically in the past few decades.  However, SAT solvers are very general tools.  A finely tuned solution will be able to best SAT solvers every time.
           </p>
         </section>
 
         <section>
           <h3>Conclusion</h3>
           <p>
-            In this post, I've only really skimmed the surface of SAT Solvers.  Treating SAT Solvers like black boxes (as I've done here) hides much of their beauty.  Furthermore, all of the examples here work with minuscule formulas.  Taking on a "real problem" should do a better job of showing the power of SAT Solvers and constraint programming more generally.
+            In this post, I've only really skimmed the surface of SAT solvers.  Treating SAT solvers like black boxes (as I've done here) hides much of their beauty.  Furthermore, all of the examples here work with minuscule formulas.  Taking on a "real problem" should do a better job of showing the power of SAT solvers and constraint programming more generally.
           </p>
           <p>
-            With that said, I felt that it was important to establish a foundational understanding of SAT before moving onto something more concrete.  Conjunctive Normal Form (CNF) needs to be understood before one can express formula and begin using SAT Solvers.  While the formula presented here are basically trivial, understanding more complex formula requires internalizing simple formula.
+            With that said, I felt that it was important to establish a foundational understanding of SAT before moving onto something more concrete.  Conjunctive Normal Form (CNF) needs to be understood before one can express formula and begin using SAT solvers.  While the formula presented here are basically trivial, understanding more complex formula requires internalizing simple formula.
           </p>
           <p>
-            In a following post, I continue to build upon this foundation by walking through the process of <Link to='./sat-solvers-sudoku.html'>building a Sudoku solver from a SAT Solver</Link>.  This should serve as an example of how an actual problem could be expressed in CNF and worked through by a SAT Solver.
+            In a following post, I continue to build upon this foundation by walking through the process of <Link to='./sat-solvers-sudoku.html'>building a Sudoku solver from a SAT solver</Link>.  This should serve as an example of how an actual problem could be expressed in CNF and worked through by a SAT solver.
           </p>
         </section>
 
