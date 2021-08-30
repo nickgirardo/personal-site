@@ -77,6 +77,8 @@ export default async function makeFeed (blogDir) {
     .filter(name => !exclude.includes(name))
     .filter(name => name.endsWith('.html'));
 
+  console.log(htmlFiles);
+
   // This transforms from name => [name, fileContents]
   const files = await Promise.all(htmlFiles.map(getFile));
   // This gets the rss data associated with each file
