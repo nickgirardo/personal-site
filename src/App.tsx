@@ -11,7 +11,6 @@ import { Route } from './components/Route';
 
 import { About } from './containers/About';
 import { Blog } from './containers/Blog';
-import { Home } from './containers/Home';
 
 const SATPost = loadable(() => import('./containers/blog/SATPost'), {
   resolveComponent: (components) => components.SATPost,
@@ -38,11 +37,10 @@ const App = (): ReactElement => (
         >
           <SudokuSAT />
         </Route>
-        { /* Main sections */ }
-        <Route path='/about' title='About'><About /></Route>
+        { /* Blog directory */ }
         <Route path='/blog' title='Blog'><Blog /></Route>
-        { /* Home */ }
-        <Route path='/' title='Home'><Home /></Route>
+        { /* Root: my about page */ }
+        <Route path='/' title='About'><About /></Route>
       </Switch>
     </Router>
   </div>

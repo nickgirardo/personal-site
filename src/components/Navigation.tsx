@@ -18,8 +18,7 @@ interface Props {
 
 export const DefaultItems = () =>
   <>
-    <Link to='/' >Home</Link>
-    <Link to='/about'>About</Link>
+    <Link to='/'>About</Link>
     <Link to='/blog'>Blog</Link>
   </>
 
