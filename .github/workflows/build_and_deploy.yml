@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build project
-        run: npm run publish
+        run: npm run build
       - name: Sync build products
         uses: jakejarvis/s3-sync-action@master
         with:
