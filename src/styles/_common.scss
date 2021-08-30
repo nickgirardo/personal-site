@@ -24,6 +24,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  color: var(--color-text);
   background-color: var(--color-main-bg);
 }
 
@@ -45,13 +46,6 @@ a {
   &:visited:active {
     color: var(--color-link-active);
   }
-}
-
-p,
-span,
-h2,
-h3 {
-  color: var(--color-text);
 }
 
 footer {
