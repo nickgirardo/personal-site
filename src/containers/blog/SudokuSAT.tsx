@@ -483,7 +483,7 @@ for (const row of [0, 1, 2, 3, 4, 5, 6, 7, 8])
 export const SudokuSAT = ():ReactElement => {
   // TODO update this date before publishing
   // Publish date as ISO8601 formatted string
-  const pubDate = new Date('2021-08-28T04:00:00.000Z');
+  const pubDate = new Date('2021-08-31T04:00:00.000Z');
 
   return (
     <Page

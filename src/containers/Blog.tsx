@@ -28,14 +28,14 @@ export const Blog = ():ReactElement => (
       <BlogEntry
         name='Practical SAT Solvers: Sudoku'
         link='/blog/sat-solvers-sudoku.html'
-        pubDate={ new Date('2021-08-28T04:00:00.000Z') }
+        pubDate={ new Date('2021-08-31T04:00:00.000Z') }
       >
         A Sudoku solver is constructed as a practical example of solving problems with SAT solvers.
       </BlogEntry>
       <BlogEntry
         name='Practical SAT Solvers: Groundwork'
         link='/blog/sat-solvers-groundwork.html'
-        pubDate={ new Date('2021-08-28T04:00:00.000Z') }
+        pubDate={ new Date('2021-08-30T04:00:00.000Z') }
       >
         An exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.
       </BlogEntry>

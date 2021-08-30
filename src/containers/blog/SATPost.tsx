@@ -133,7 +133,7 @@ console.log(countSolutions(3, clauses));`;
 
 export const SATPost = ():ReactElement => {
   // Publish date as ISO8601 formatted string
-  const pubDate = new Date('2021-08-28T04:00:00.000Z');
+  const pubDate = new Date('2021-08-30T04:00:00.000Z');
 
   return (
     <Page
