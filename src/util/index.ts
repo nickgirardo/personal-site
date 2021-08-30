@@ -33,9 +33,7 @@ export const printData = (data: any):string => {
 
 
 // This fn will do, don't want to bring in an entire lib for something small like this
-export const dateToString = (dateString: string): string => {
-  const date = new Date(dateString);
-
+export const dateToString = (date: Date): string => {
   const monthName = (month: number): string => {
     switch (month) {
       case 0:

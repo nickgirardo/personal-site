@@ -483,7 +483,7 @@ for (const row of [0, 1, 2, 3, 4, 5, 6, 7, 8])
 export const SudokuSAT = ():ReactElement => {
   // TODO update this date before publishing
   // Publish date as ISO8601 formatted string
-  const pubDate = '2021-08-28T04:00:00.000Z'
+  const pubDate = new Date('2021-08-28T04:00:00.000Z');
 
   return (
     <Page
@@ -494,7 +494,7 @@ export const SudokuSAT = ():ReactElement => {
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='A Sudoku solver is constructed as a practical example of solving problems with SAT solvers.' />
-        <meta name='created' content={ pubDate } />
+        <meta name='created' content={ pubDate.toISOString() } />
         <meta name='id' content='3bbb20b5-f2fb-4e4f-96a8-10d8e17d1fee' />
       </Helmet>
 
@@ -751,11 +751,10 @@ export const SudokuSAT = ():ReactElement => {
         <footer>
           <span>
             Posted by Nick Girardo on&nbsp;
-            <time dateTime={ pubDate }>{ dateToString(pubDate) }</time>
+            <time dateTime={ pubDate.toISOString() }>{ dateToString(pubDate) }</time>
           </span>
         </footer>
       </article>
-      { /* TODO footer */ }
     </Page>
   );
 };

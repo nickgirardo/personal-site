@@ -132,7 +132,7 @@ console.log(countSolutions(3, clauses));`;
 
 export const SATPost = ():ReactElement => {
   // Publish date as ISO8601 formatted string
-  const pubDate = '2021-08-28T04:00:00.000Z';
+  const pubDate = new Date('2021-08-28T04:00:00.000Z');
 
   return (
     <Page
@@ -144,7 +144,7 @@ export const SATPost = ():ReactElement => {
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
         <meta name='description' content='Exploration of the basics of SAT solvers' />
         { /* TODO fix date here */ }
-        <meta name='created' content={ pubDate } />
+        <meta name='created' content={ pubDate.toISOString() } />
         <meta name='id' content='11c988d0-e0aa-4925-89c6-710f94d0132c' />
       </Helmet>
 
@@ -325,7 +325,7 @@ export const SATPost = ():ReactElement => {
         <footer>
           <span>
             Posted by Nick Girardo on&nbsp;
-            <time dateTime={ pubDate }>{ dateToString(pubDate) }</time>
+            <time dateTime={ pubDate.toISOString() }>{ dateToString(pubDate) }</time>
           </span>
         </footer>
       </article>
