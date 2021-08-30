@@ -25,7 +25,7 @@ export const Blog = ():ReactElement =>
         link='/blog/sat-solvers-groundwork.html'
         pubDate={ new Date('2021-08-28T04:00:00.000Z') }
       >
-        Exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.
+        An exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.
       </BlogEntry>
     </div>
   </Page>;

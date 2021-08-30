@@ -143,7 +143,7 @@ export const SATPost = ():ReactElement => {
     >
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
-        <meta name='description' content='Exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.' />
+        <meta name='description' content='An exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.' />
         { /* TODO fix date here */ }
         <meta name='created' content={ pubDate.toISOString() } />
         <meta name='id' content='11c988d0-e0aa-4925-89c6-710f94d0132c' />
