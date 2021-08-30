@@ -3,9 +3,12 @@ import { readdir, readFile } from 'fs/promises';
 import HTMLParser from 'node-html-parser';
 import RSS from 'rss';
 
-const baseUrl = process.env.PUBLIC_URL;
-
 export default async function makeFeed (blogDir) {
+  if (!process.env.PUBLIC_URL)
+    console.warn('PUBLIC_URL not set!  This will likely cause problems!');
+
+  const baseUrl = process.env.PUBLIC_URL;
+
   async function getDir() {
     try {
       return await readdir(blogDir);
