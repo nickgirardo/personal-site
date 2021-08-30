@@ -3,6 +3,10 @@ import { readdir, readFile } from 'fs/promises';
 import HTMLParser from 'node-html-parser';
 import RSS from 'rss';
 
+// TODO hardcoding for now
+// List of articles in the blog directory to ignore
+const exclude = ['index.html'];
+
 export default async function makeFeed (blogDir) {
   if (!process.env.PUBLIC_URL)
     console.warn('PUBLIC_URL not set!  This will likely cause problems!');
@@ -64,8 +68,13 @@ export default async function makeFeed (blogDir) {
 
   // Get all of the files in the blog dir
   const dir = await getDir();
+
   // Only interested in the html files
-  const htmlFiles = dir.filter(name => name.endsWith('.html'));
+  // Filter out index.html as well
+  const htmlFiles = dir
+    .filter(name => !exclude.includes(name))
+    .filter(name => name.endsWith('.html'));
+
   // This transforms from name => [name, fileContents]
   const files = await Promise.all(htmlFiles.map(getFile));
   // This gets the rss data associated with each file
