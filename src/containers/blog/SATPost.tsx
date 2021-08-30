@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import { dateToString } from '../../util';
@@ -142,7 +143,7 @@ export const SATPost = ():ReactElement => {
     >
       <Helmet>
         <meta name='author' content='nickgirardo@gmail.com (Nick Girardo)' />
-        <meta name='description' content='Exploration of the basics of SAT solvers' />
+        <meta name='description' content='Exploration of the basics of the Boolean satisfiable problem (SAT) and SAT solvers.' />
         { /* TODO fix date here */ }
         <meta name='created' content={ pubDate.toISOString() } />
         <meta name='id' content='11c988d0-e0aa-4925-89c6-710f94d0132c' />
@@ -321,7 +322,32 @@ export const SATPost = ():ReactElement => {
           </p>
         </section>
 
-        { /* TODO fix date */ }
+        <section>
+          <h3>A major caveat: Performance</h3>
+          <p>
+            Now that you have a basic understanding of SAT Solvers, performance&mdash; the elephant in the room&mdash; must be addressed.
+          </p>
+          <p>
+            The boolean satisfiability problem, or SAT, belongs to a class of problems called NP-complete.  NP means "nondeterministic polynomial-time," which is to say that a solution cannot be found in polynomial time.  Complete means that SAT is at least as difficult as every other NP problem.  In the case of SAT, even the best known solvers take exponentially longer in the worst case as the given formula grows.
+          </p>
+          <p>
+            While this probably makes you a bit weary of SAT Solvers, there are many problems which are NP-complete and therefore require a tool similar to a SAT Solver.  Furthermore, SAT is <i>the</i> NP-complete problem.  Because of its simplicity and the importance of NP as a class of problems, many researchers have dedicated considerable effort to improving the state-of-the-art in SAT Solvers.  While worst-case exponential time is a barrier which may likely never be breached (doing so would prove P=NP), clever algorithms have pushed performance forward drastically in the past few decades.  However, SAT Solvers are very general tools.  A finely tuned solution will be able to best SAT Solvers every time.
+          </p>
+        </section>
+
+        <section>
+          <h3>Conclusion</h3>
+          <p>
+            In this post, I've only really skimmed the surface of SAT Solvers.  Treating SAT Solvers like black boxes (as I've done here) hides much of their beauty.  Furthermore, all of the examples here work with minuscule formulas.  Taking on a "real problem" should do a better job of showing the power of SAT Solvers and constraint programming more generally.
+          </p>
+          <p>
+            With that said, I felt that it was important to establish a foundational understanding of SAT before moving onto something more concrete.  Conjunctive Normal Form (CNF) needs to be understood before one can express formula and begin using SAT Solvers.  While the formula presented here are basically trivial, understanding more complex formula requires internalizing simple formula.
+          </p>
+          <p>
+            In a following post, I continue to build upon this foundation by walking through the process of <Link to='./sat-solvers-sudoku.html'>building a Sudoku solver from a SAT Solver</Link>.  This should serve as an example of how an actual problem could be expressed in CNF and worked through by a SAT Solver.
+          </p>
+        </section>
+
         <footer>
           <span>
             Posted by Nick Girardo on&nbsp;
