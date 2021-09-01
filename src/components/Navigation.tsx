@@ -19,7 +19,7 @@ interface Props {
 export const DefaultItems = () =>
   <>
     <Link to='/'>About</Link>
-    <Link to='/blog'>Blog</Link>
+    <Link to='/blog/index.html'>Blog</Link>
   </>
 
 export const Navigation = (props: Props): ReactElement => {

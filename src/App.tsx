@@ -38,7 +38,7 @@ const App = (): ReactElement => (
           <SudokuSAT />
         </Route>
         { /* Blog directory */ }
-        <Route path='/blog' title='Blog'><Blog /></Route>
+        <Route path='/blog/index.html' title='Blog'><Blog /></Route>
         { /* Root: my about page */ }
         <Route path='/' title='About'><About /></Route>
       </Switch>
