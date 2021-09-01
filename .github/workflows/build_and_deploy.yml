@@ -21,7 +21,7 @@ jobs:
       - name: Build project
         env:
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
-        run: PUBLIC_URL=$PUBLIC_URL npm run build
+        run: npm run build
       - name: Sync build products
         uses: jakejarvis/s3-sync-action@master
         with:
