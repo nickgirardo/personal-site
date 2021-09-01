@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import { dateToString } from '../../util';
@@ -505,7 +506,8 @@ export const SudokuSAT = ():ReactElement => {
         <h2>Practical SAT Solvers: Sudoku Solver</h2>
         <section>
           <p>
-            This post is a follow up to a previous post in which the basic functioning of a SAT solver was explored. This post will demonstrate applying a SAT solver to a basic example problem: solving a Sudoku puzzle.  If you understand the basics of how SAT solvers work, you might not need to read the prior post, but in it several helper functions were described which will be used here.  You can see them bellow:
+            This post is a follow up to a previous post in which the <Link to='./sat-solvers-groundwork.html'>basic functioning of a SAT solver was explored</Link>. This post will demonstrate applying a SAT solver to a basic example problem: solving a Sudoku puzzle.  If you understand the basics of how SAT solvers work, you might not need to read the prior post, but in it several helper functions were described which will be used here.  You can see them bellow:
+
           </p>
           <CodeRegion
             code={ `${solutionAsClause}\n${printSolution}\n${negateClause}\n${countSolutions}` }
