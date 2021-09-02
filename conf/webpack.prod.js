@@ -12,8 +12,8 @@ module.exports = {
     // NOTE for some reason this dir seems to be based on the location of this file
     // all other paths seem to be based on the repo root
     path: path.resolve(__dirname, '../build'),
-    filename: '[name].[contenthash:8].js',
-    chunkFilename: '[name].chunk.js',
+    filename: 'res/js/[name].[contenthash:8].js',
+    chunkFilename: 'res/js/[name].chunk.js',
   },
   resolve: {
     extensions: ['', '.js', '.ts', '.jsx', '.tsx'],
@@ -31,7 +31,10 @@ module.exports = {
       },
       {
         test: /\.png$/i,
-        use: 'file-loader',
+        loader: 'file-loader',
+        options: {
+          name: 'res/img/[contenthash].[ext]',
+        },
       },
       {
         test: /\.raw$/i,
