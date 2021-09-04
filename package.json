@@ -16,9 +16,10 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "prestart": "if [ -d \"build\" ]; then rm -r \"build\"; fi",
+    "clean": "if [ -d \"build\" ]; then rm -r \"build\"; fi",
+    "prestart": "npm run clean",
     "start": "webpack serve --config conf/webpack.dev.js",
-    "prebuild": "if [ -d \"build\" ]; then rm -r \"build\"; fi",
+    "prebuild": "npm run clean",
     "build": "webpack --config conf/webpack.prod.js",
     "postbuild": "node ./scripts/postbuild.mjs",
     "profile": "webpack --config conf/webpack.prod.js --profile --json",
