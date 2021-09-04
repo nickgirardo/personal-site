@@ -24,9 +24,7 @@ module.exports = {
         test: /\.tex$/i,
         use: [
           '@svgr/webpack',
-          {
-            loader: path.resolve('src/util/tex-loader.js'),
-          },
+          'mathjax-loader',
         ],
       },
       {
