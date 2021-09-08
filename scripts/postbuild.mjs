@@ -6,7 +6,11 @@ import makeFeed from './publishRSS.mjs';
 
 const blogDir = './build/blog/';
 
-const snapExclude = ['/resume.pdf', '/blog/feed.rss'];
+const snapExclude = [
+  '/resume.pdf',
+  '/blog/feed.rss',
+  '/projects/sudoku/',
+];
 
 // Run react-snap here
 // Traverses our pages and outputs as HTML
