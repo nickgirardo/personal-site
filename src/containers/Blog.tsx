@@ -17,7 +17,7 @@ const RSSLink = ():ReactElement => (
 export const Blog = ():ReactElement => (
   <Page
     navItems={ DefaultItems }
-    navType={ NavigationType.Responsive }
+    navType={ NavigationType.Header }
     bodyType={ BodyType.SidebarResponsive }
   >
     <div>

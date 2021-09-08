@@ -8,7 +8,7 @@ import '../styles/_projects.scss';
 export const Projects = ():ReactElement => (
   <Page
     navItems={ DefaultItems }
-    navType={ NavigationType.Responsive }
+    navType={ NavigationType.Header }
     bodyType={ BodyType.SidebarResponsive }
   >
     <div>
