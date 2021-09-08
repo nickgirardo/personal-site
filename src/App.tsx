@@ -11,6 +11,7 @@ import { Route } from './components/Route';
 
 import { About } from './containers/About';
 import { Blog } from './containers/Blog';
+import { Projects } from './containers/Projects';
 
 const SATPost = loadable(() => import('./containers/blog/SATPost'), {
   resolveComponent: (components) => components.SATPost,
@@ -39,6 +40,8 @@ const App = (): ReactElement => (
         </Route>
         { /* Blog directory */ }
         <Route path='/blog/index.html' title='Blog'><Blog /></Route>
+        { /* Projects list */ }
+        <Route path='/projects/index.html' title='Projects'><Projects /></Route>
         { /* Root: my about page */ }
         <Route path='/' title='About'><About /></Route>
       </Switch>

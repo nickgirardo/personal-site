@@ -20,6 +20,7 @@ export const DefaultItems = () =>
   <>
     <Link to='/'>About</Link>
     <Link to='/blog/index.html'>Blog</Link>
+    <Link to='/projects/index.html'>Projects</Link>
   </>
 
 export const Navigation = (props: Props): ReactElement => {
