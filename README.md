@@ -1,7 +1,9 @@
-Personal Site of Nick Girardo
-=============================
+Old Personal Site of Nick Girardo
+=================================
 
-Check it out live <https://nickgirardo.com/>
+This repo contains the source code which used to power [my personal site](https://nickgirardo.com/).  It is no longer in use and that site is now described by [this repo](https://github.com/nickgirardo/hakyll-site/).
+
+The information below this section is left unchanged but some of it will no longer be accurate, most notably the deployment section references a github action which no longer exists (but can be found in this repo's history for those curious).
 
 Runing the Site
 ---------------
